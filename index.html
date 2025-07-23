@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meet Patel | iOS & Flutter Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #5e81f4;
@@ -42,7 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(circle at 10% 20%, rgba(94, 129, 244, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(255, 107, 157, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 50% 30%, rgba(0, 209, 178, 0.1) 0%, transparent 30%),
@@ -70,11 +72,23 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
-        h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-weight: 700;
             line-height: 1.3;
         }
@@ -278,8 +292,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.4; }
-            50% { transform: scale(1.1); opacity: 0.6; }
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.6;
+            }
         }
 
         .hero-content {
@@ -299,6 +322,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -340,8 +364,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
         .hero-image::before {
@@ -365,7 +396,8 @@
             perspective: 1000px;
         }
 
-        .iphone, .android {
+        .iphone,
+        .android {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -440,8 +472,17 @@
         }
 
         @keyframes borderPulse {
-            0%, 100% { transform: translate(0, 0); opacity: 0.7; }
-            50% { transform: translate(-10px, -10px); opacity: 1; }
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+                opacity: 0.7;
+            }
+
+            50% {
+                transform: translate(-10px, -10px);
+                opacity: 1;
+            }
         }
 
         .about-image img {
@@ -676,7 +717,8 @@
             font-size: 1.5rem;
         }
 
-        .contact-text p, .contact-text a {
+        .contact-text p,
+        .contact-text a {
             color: var(--gray);
             text-decoration: none;
             transition: var(--transition);
@@ -833,27 +875,27 @@
             .hero-content {
                 flex-direction: column;
             }
-            
+
             .hero-text {
                 padding-right: 0;
                 margin-bottom: 80px;
                 text-align: center;
                 max-width: 800px;
             }
-            
+
             .hero-text p {
                 margin-left: auto;
                 margin-right: auto;
             }
-            
+
             .about-content {
                 flex-direction: column;
             }
-            
+
             .section-title h2 {
                 font-size: 2.5rem;
             }
-            
+
             .hero-text h1 {
                 font-size: 3.5rem;
             }
@@ -873,41 +915,41 @@
                 transition: var(--transition);
                 backdrop-filter: blur(20px);
             }
-            
+
             .nav-links.active {
                 right: 0;
             }
-            
+
             .nav-links li {
                 margin: 25px 0;
             }
-            
+
             .mobile-menu-btn {
                 display: block;
             }
-            
+
             .section-title h2 {
                 font-size: 2.2rem;
             }
-            
+
             .hero-text h1 {
                 font-size: 2.8rem;
             }
-            
+
             .hero-btns {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .btn-outline {
                 margin-left: 0;
                 margin-top: 20px;
             }
-            
+
             .portfolio-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .device-container {
                 width: 280px;
                 height: 500px;
@@ -918,22 +960,23 @@
             section {
                 padding: 80px 0;
             }
-            
+
             .hero {
                 padding-top: 150px;
                 padding-bottom: 80px;
             }
-            
+
             .hero-text h1 {
                 font-size: 2.3rem;
             }
-            
+
             .section-title h2 {
                 font-size: 2rem;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Animated stars background -->
     <div class="stars" id="stars"></div>
@@ -960,7 +1003,8 @@
         <div class="container hero-content">
             <div class="hero-text">
                 <h1>Hi, I'm Meet Patel<br><span>iOS & Flutter Developer</span></h1>
-                <p>With 7+ years of experience building high-quality mobile applications for iOS and cross-platform solutions. I transform ideas into elegant, functional, and user-friendly mobile experiences.</p>
+                <p>With 7+ years of experience building high-quality mobile applications for iOS and cross-platform
+                    solutions. I transform ideas into elegant, functional, and user-friendly mobile experiences.</p>
                 <div class="hero-btns">
                     <a href="#portfolio" class="btn">View My Work</a>
                     <a href="#contact" class="btn btn-outline">Contact Me</a>
@@ -987,15 +1031,23 @@
             </div>
             <div class="about-content">
                 <div class="about-image animate-on-scroll">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700&q=80" alt="Meet Patel">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=700&q=80"
+                        alt="Meet Patel">
                 </div>
                 <div class="about-text animate-on-scroll">
                     <div class="experience-badge">7+ Years Experience</div>
                     <h3>Professional iOS & Flutter Developer</h3>
-                    <p>I'm a passionate mobile developer specializing in iOS and Flutter applications with expertise in Swift, SwiftUI, Flutter, React Native, and FlutterFlow. With 7+ years of professional experience, I've delivered numerous successful mobile projects for clients worldwide.</p>
-                    <p>My expertise includes building native iOS applications with Swift and SwiftUI, as well as cross-platform solutions using Flutter and React Native. I focus on creating apps that are not only visually appealing but also performant, scalable, and user-friendly.</p>
-                    <p>I leverage FlutterFlow to accelerate development while maintaining customization and scalability. When I'm not coding, you can find me contributing to open-source projects or exploring new technologies in the mobile development space.</p>
-                    <a href="https://drive.google.com/file/d/1icQgrsv71ZaSAVU6Wbpv02Ne7ONQCjaH/view?usp=sharing" class="btn">Download CV</a>
+                    <p>I'm a passionate mobile developer specializing in iOS and Flutter applications with expertise in
+                        Swift, SwiftUI, Flutter, React Native, and FlutterFlow. With 7+ years of professional
+                        experience, I've delivered numerous successful mobile projects for clients worldwide.</p>
+                    <p>My expertise includes building native iOS applications with Swift and SwiftUI, as well as
+                        cross-platform solutions using Flutter and React Native. I focus on creating apps that are not
+                        only visually appealing but also performant, scalable, and user-friendly.</p>
+                    <p>I leverage FlutterFlow to accelerate development while maintaining customization and scalability.
+                        When I'm not coding, you can find me contributing to open-source projects or exploring new
+                        technologies in the mobile development space.</p>
+                    <a href="https://drive.google.com/file/d/1icQgrsv71ZaSAVU6Wbpv02Ne7ONQCjaH/view?usp=sharing"
+                        class="btn">Download CV</a>
                 </div>
             </div>
         </div>
@@ -1140,84 +1192,96 @@
             <div class="portfolio-grid">
                 <div class="portfolio-item animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Stable Hub App">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+                            alt="Stable Hub App">
                         <div class="portfolio-overlay">
                             <h3>Stable Hub</h3>
                             <p>Comprehensive equestrian management app for stable operations and horse care.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">iOS</span>
                                 <span class="portfolio-tag">Swift</span>
-                                <a href="https://apps.apple.com/az/app/stable-hub/id1556437401" target="_blank" class="portfolio-tag">View App</a>
+                                <a href="https://apps.apple.com/az/app/stable-hub/id1556437401" target="_blank"
+                                    class="portfolio-tag">View App</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="portfolio-item animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Mind Mapping App">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+                            alt="Mind Mapping App">
                         <div class="portfolio-overlay">
                             <h3>Mind Mapping - Resilience</h3>
                             <p>Mental wellness application with cognitive exercises and resilience training.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">iOS</span>
                                 <span class="portfolio-tag">SwiftUI</span>
-                                <a href="https://apps.apple.com/us/app/mindmapping-resilience/id1626979283" target="_blank" class="portfolio-tag">View App</a>
+                                <a href="https://apps.apple.com/us/app/mindmapping-resilience/id1626979283"
+                                    target="_blank" class="portfolio-tag">View App</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="portfolio-item animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Cintona App">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+                            alt="Cintona App">
                         <div class="portfolio-overlay">
                             <h3>Cintona</h3>
                             <p>Music streaming and discovery platform with personalized recommendations.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">iOS</span>
                                 <span class="portfolio-tag">Flutter</span>
-                                <a href="https://apps.apple.com/in/app/cintona/id1554648094" target="_blank" class="portfolio-tag">View App</a>
+                                <a href="https://apps.apple.com/in/app/cintona/id1554648094" target="_blank"
+                                    class="portfolio-tag">View App</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="portfolio-item animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="LittleSouls App">
+                        <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+                            alt="LittleSouls App">
                         <div class="portfolio-overlay">
                             <h3>LittleSouls</h3>
                             <p>Child development tracking application with educational resources.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">iOS</span>
                                 <span class="portfolio-tag">Swift</span>
-                                <a href="https://apps.apple.com/ca/app/littlesouls/id1553078697" target="_blank" class="portfolio-tag">View App</a>
+                                <a href="https://apps.apple.com/ca/app/littlesouls/id1553078697" target="_blank"
+                                    class="portfolio-tag">View App</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="portfolio-item animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Nazaray App">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+                            alt="Nazaray App">
                         <div class="portfolio-overlay">
                             <h3>Nazaray</h3>
                             <p>Health and wellness application with personalized care plans.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">iOS</span>
                                 <span class="portfolio-tag">Flutter</span>
-                                <a href="https://apps.apple.com/in/app/nazaray/id6443620350" target="_blank" class="portfolio-tag">View App</a>
+                                <a href="https://apps.apple.com/in/app/nazaray/id6443620350" target="_blank"
+                                    class="portfolio-tag">View App</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="portfolio-item animate-on-scroll">
                     <div class="portfolio-image">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80" alt="Neuro Physio Rx App">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400&q=80"
+                            alt="Neuro Physio Rx App">
                         <div class="portfolio-overlay">
                             <h3>Neuro Physio Rx</h3>
                             <p>Neurological physiotherapy application with exercise programs.</p>
                             <div class="portfolio-tags">
                                 <span class="portfolio-tag">iOS</span>
                                 <span class="portfolio-tag">SwiftUI</span>
-                                <a href="https://apps.apple.com/in/app/neuro-physio-rx/id6478271730" target="_blank" class="portfolio-tag">View App</a>
+                                <a href="https://apps.apple.com/in/app/neuro-physio-rx/id6478271730" target="_blank"
+                                    class="portfolio-tag">View App</a>
                             </div>
                         </div>
                     </div>
@@ -1268,10 +1332,12 @@
                         <div class="contact-text">
                             <h3>Connect</h3>
                             <div class="social-links">
-                                <a href="https://github.com/patelmeet12" target="_blank"><i class="fab fa-github"></i></a>
+                                <a href="https://github.com/patelmeet12" target="_blank"><i
+                                        class="fab fa-github"></i></a>
                                 <a href="https://www.linkedin.com/in/patelmeet12"><i class="fab fa-linkedin-in"></i></a>
                                 <a href="https://x.com/patelmeet_12"><i class="fab fa-twitter"></i></a>
-                                <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ"><i class="fa-solid fa-envelope"></i></a>
+                                <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ"><i
+                                        class="fa-solid fa-envelope"></i></a>
                             </div>
                         </div>
                     </div>
@@ -1302,13 +1368,15 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
-                    <h3>Meet<span>Patel</span></h3>
-                    <p>iOS & Flutter Developer with 7+ years of experience creating high-performance mobile applications for startups and enterprises.</p>
+                    <h3>Meet <span>Patel</span></h3>
+                    <p>iOS & Flutter Developer with 7+ years of experience creating high-performance mobile applications
+                        for startups and enterprises.</p>
                     <div class="social-links">
                         <a href="https://github.com/patelmeet12" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                        <a href="https://www.linkedin.com/in/patelmeet12"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://x.com/patelmeet_12"><i class="fab fa-twitter"></i></a>
+                        <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ"><i
+                                class="fa-solid fa-envelope"></i></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -1324,11 +1392,11 @@
                 <div class="footer-links">
                     <h3>Services</h3>
                     <ul>
-                        <li><a href="#">iOS App Development</a></li>
-                        <li><a href="#">Flutter App Development</a></li>
-                        <li><a href="#">React Native Development</a></li>
-                        <li><a href="#">FlutterFlow Development</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#portfolio">iOS App Development</a></li>
+                        <li><a href="#portfolio">Flutter App Development</a></li>
+                        <li><a href="#portfolio">React Native Development</a></li>
+                        <li><a href="#portfolio">FlutterFlow Development</a></li>
+                        <li><a href="#portfolio">UI/UX Design</a></li>
                     </ul>
                 </div>
             </div>
@@ -1342,18 +1410,18 @@
         // Create animated stars
         const starsContainer = document.getElementById('stars');
         const starsCount = 150;
-        
+
         for (let i = 0; i < starsCount; i++) {
             const star = document.createElement('div');
             star.classList.add('star');
-            
+
             // Random properties
             const size = Math.random() * 3;
             const posX = Math.random() * 100;
             const posY = Math.random() * 100;
             const opacity = 0.2 + Math.random() * 0.8;
             const duration = 3 + Math.random() * 5;
-            
+
             star.style.width = `${size}px`;
             star.style.height = `${size}px`;
             star.style.left = `${posX}%`;
@@ -1361,21 +1429,21 @@
             star.style.opacity = opacity;
             star.style.setProperty('--duration', `${duration}s`);
             star.style.setProperty('--opacity', opacity);
-            
+
             starsContainer.appendChild(star);
         }
 
         // Mobile Menu Toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-        
+
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active')
+                ? '<i class="fas fa-times"></i>'
                 : '<i class="fas fa-bars"></i>';
         });
-        
+
         // Close mobile menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
@@ -1383,24 +1451,24 @@
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
-        
+
         // Sticky header on scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             header.classList.toggle('sticky', window.scrollY > 100);
         });
-        
+
         // Scroll animations
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.animate-on-scroll');
-            
+
             elements.forEach(element => {
                 const elementPosition = element.getBoundingClientRect().top;
                 const screenPosition = window.innerHeight / 1.3;
-                
+
                 if (elementPosition < screenPosition) {
                     element.classList.add('visible');
-                    
+
                     // Animate skill bars
                     if (element.classList.contains('skill-category')) {
                         const skillBars = element.querySelectorAll('.skill-progress');
@@ -1412,20 +1480,20 @@
                 }
             });
         };
-        
+
         // Initialize on load
         window.addEventListener('load', animateOnScroll);
         // Listen for scroll
         window.addEventListener('scroll', animateOnScroll);
-        
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
+
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({
@@ -1437,4 +1505,5 @@
         });
     </script>
 </body>
+
 </html>
