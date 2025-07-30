@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meet Patel | iOS & Cross-Platform Developer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,6 +18,7 @@
             --light: #f8f9fa;
             --light-gray: #e9ecef;
             --gray: #adb5bd;
+            --coffee: #ffdd00;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -153,6 +154,19 @@
             color: var(--darkest);
         }
 
+        .btn-coffee {
+            background: linear-gradient(90deg, var(--coffee), #ffaa00);
+            color: #3d2600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-coffee:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 221, 0, 0.3);
+        }
+
         /* Header */
         header {
             position: fixed;
@@ -255,6 +269,23 @@
             display: flex;
             gap: 1.5rem;
             margin-top: 2.5rem;
+        }
+
+        .coffee-section {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            max-width: fit-content;
+        }
+        
+        .coffee-section p {
+            margin: 0;
+            color: var(--light);
+            font-size: 0.95rem;
         }
 
         .hero-image {
@@ -1166,6 +1197,10 @@
             .hero-actions {
                 justify-content: center;
             }
+            
+            .coffee-section {
+                margin: 1.5rem auto 0;
+            }
 
             .hero-image {
                 display: none;
@@ -1269,6 +1304,13 @@
                 <div class="hero-actions">
                     <a href="#portfolio" class="btn btn-primary">View My Work</a>
                     <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                </div>
+
+                <div class="coffee-section">
+                    <p>Enjoy my work? Support my coffee addiction ☕</p>
+                    <a href="https://buymeacoffee.com/patelmeet12" target="_blank" class="btn btn-coffee">
+                        <i class="fas fa-mug-hot"></i> Buy Me a Coffee
+                    </a>
                 </div>
             </div>
         </div>
@@ -1551,6 +1593,60 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Client Feedback</span>
+                <h2 class="text-gradient">Testimonials</h2>
+            </div>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Meet delivered our app ahead of schedule with exceptional quality. His FlutterFlow expertise
+                            saved us 40% in development costs while maintaining all required functionality.</p>
+                    </div>
+                    <div class="client-info">
+                        <div class="client-avatar">SJ</div>
+                        <div class="client-details">
+                            <h4>Sarah Johnson</h4>
+                            <p>CEO, TechStart Inc.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>The iOS app Meet developed for us has 4.9/5 rating on App Store. His attention to UI/UX
+                            details and performance optimization is remarkable. Will definitely work with him again.</p>
+                    </div>
+                    <div class="client-info">
+                        <div class="client-avatar">MC</div>
+                        <div class="client-details">
+                            <h4>Michael Chen</h4>
+                            <p>Product Manager, HealthPlus</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Meet's cross-platform solution using Flutter exceeded our expectations. He delivered both iOS
+                            and Android apps with native-like performance at half the cost of native development.</p>
+                    </div>
+                    <div class="client-info">
+                        <div class="client-avatar">AR</div>
+                        <div class="client-details">
+                            <h4>Amanda Rodriguez</h4>
+                            <p>CTO, FinTech Solutions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Portfolio Section - Redesigned -->
     <section class="portfolio" id="portfolio">
         <div class="container">
@@ -1576,10 +1672,14 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Polstrat Cadre App</h3>
-                        <p>Polstrat’s Cadre App is a productivity tool for managing teams, volunteers and political cadres by assigning and tracking time‑based tasks and activities.</p>
+                        <p>Polstrat’s Cadre App is a productivity tool for managing teams, volunteers and political
+                            cadres by assigning and tracking time‑based tasks and activities.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> SwiftUI
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1599,13 +1699,16 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Neuro Physio Rx</h3>
-                        <p>Neuro Physio Rx. by Mandal Therapeutics Inc. is a personalized pain‑relief and physiotherapy app offering tailored exercise routines (mobility, neuromobility, yoga, meditation, vision, massage), progress tracking, expert education, and reminders to manage chronic or acute discomfort.</p>
+                        <p>Neuro Physio Rx. by Mandal Therapeutics Inc. is a personalized pain‑relief and physiotherapy
+                            app offering tailored exercise routines (mobility, neuromobility, yoga, meditation, vision,
+                            massage), progress tracking, expert education, and reminders to manage chronic or acute
+                            discomfort.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
+                                <i class="fa-brands fa-flutter"></i> Flutter
                             </span>
                             <span class="platform-badge android-badge">
-                                <i class="fab fa-android"></i> Android
+                                <i class="fa-brands fa-dart-lang"></i> Dart
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1629,13 +1732,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>ShoppyWhere</h3>
-                        <p>ShoppyWhere is a global e‑commerce app offering immersive virtual tours of curated international stores, enabling users to discover and securely shop unique products from around the world with international shipping.</p>
+                        <p>ShoppyWhere is a global e‑commerce app offering immersive virtual tours of curated
+                            international stores, enabling users to discover and securely shop unique products from
+                            around the world with international shipping.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
+                                <i class="fa-brands fa-react"></i> React Native
                             </span>
                             <span class="platform-badge android-badge">
-                                <i class="fab fa-android"></i> Android
+                                <i class="fa-brands fa-java"></i> JavaScript
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1659,10 +1764,14 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Nazaray</h3>
-                        <p>Nazaray is a horse‑racing fan platform offering behind‑the‑scenes videos, updates and community content centered on racehorses and industry personalities.</p>
+                        <p>Nazaray is a horse‑racing fan platform offering behind‑the‑scenes videos, updates and
+                            community content centered on racehorses and industry personalities.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1682,13 +1791,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>DiNGr</h3>
-                        <p>DiNGr is a free, season‑long DFS‑style fantasy sports app that lets users pick one MLB or NHL player each day to hit a home run, and compete over a full, half, or month‑long season to see who racks up the most HRs.</p>
+                        <p>DiNGr is a free, season‑long DFS‑style fantasy sports app that lets users pick one MLB or NHL
+                            player each day to hit a home run, and compete over a full, half, or month‑long season to
+                            see who racks up the most HRs.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
+                                <i class="fa-brands fa-flutter"></i> Flutter
                             </span>
                             <span class="platform-badge android-badge">
-                                <i class="fab fa-android"></i> Android
+                                <i class="fa-brands fa-dart-lang"></i> Dart
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1712,13 +1823,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Malpack Toolbox</h3>
-                        <p>Malpack Toolbox by Malpack Ltd is a free industrial utility app that helps packaging professionals identify the ideal stretch film solution through cross‑referencing tools, film calculators, product brochures, and tutorial videos.</p>
+                        <p>Malpack Toolbox by Malpack Ltd is a free industrial utility app that helps packaging
+                            professionals identify the ideal stretch film solution through cross‑referencing tools, film
+                            calculators, product brochures, and tutorial videos.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
+                                <i class="fa-brands fa-react"></i> React Native
                             </span>
                             <span class="platform-badge android-badge">
-                                <i class="fab fa-android"></i> Android
+                                <i class="fa-brands fa-java"></i> JavaScript
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1742,10 +1855,14 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>MindMapping - Resilience</h3>
-                        <p>MindMapping – Resilience was an iOS app that analyzed genetic resilience or vulnerability to mental illness based on a user’s genetic profile.</p>
+                        <p>MindMapping – Resilience was an iOS app that analyzed genetic resilience or vulnerability to
+                            mental illness based on a user’s genetic profile.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> SwiftUI
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1765,10 +1882,14 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Stable Hub</h3>
-                        <p>Stable Hub is a mobile platform built for racehorse trainers to streamline secure communication and update owners with photos, videos, and reminders in real‑time.</p>
+                        <p>Stable Hub is a mobile platform built for racehorse trainers to streamline secure
+                            communication and update owners with photos, videos, and reminders in real‑time.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1788,10 +1909,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>LittleSouls</h3>
-                        <p>LittleSouls is a mindfulness and wellness app for kids offering guided breathing exercises, calming games, yoga, music, and tracking tools to nurture inner calm and emotional resilience.</p>
+                        <p>LittleSouls is a mindfulness and wellness app for kids offering guided breathing exercises,
+                            calming games, yoga, music, and tracking tools to nurture inner calm and emotional
+                            resilience.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1811,10 +1937,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Cintona</h3>
-                        <p>Cintona is a conference networking app that matches attendees based on their interests and competencies, lets them schedule meetings or workshops, and supports in-person or embedded video-chat interactions.</p>
+                        <p>Cintona is a conference networking app that matches attendees based on their interests and
+                            competencies, lets them schedule meetings or workshops, and supports in-person or embedded
+                            video-chat interactions.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1834,13 +1965,14 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Tradeasia</h3>
-                        <p>Tradeasia is a B2B mobile app that lets industrial-grade chemical buyers request quotes, track shipments, and live‑chat with the Tradeasia team in real time.</p>
+                        <p>Tradeasia is a B2B mobile app that lets industrial-grade chemical buyers request quotes,
+                            track shipments, and live‑chat with the Tradeasia team in real time.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
+                                <i class="fa-brands fa-flutter"></i> Flutter
                             </span>
                             <span class="platform-badge android-badge">
-                                <i class="fab fa-android"></i> Android
+                                <i class="fa-brands fa-dart-lang"></i> Dart
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1864,13 +1996,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>K-Go – Book a ride</h3>
-                        <p>K‑Go – Book a ride (by Kids On The Go) is a Canada‑based transport app designed specifically for ages 5–17, enabling parents to schedule safe, vetted rides for kids with real‑time tracking and certified drivers in cities like Saskatoon.</p>
+                        <p>K‑Go – Book a ride (by Kids On The Go) is a Canada‑based transport app designed specifically
+                            for ages 5–17, enabling parents to schedule safe, vetted rides for kids with real‑time
+                            tracking and certified drivers in cities like Saskatoon.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
+                                <i class="fa-brands fa-react"></i> React Native
                             </span>
                             <span class="platform-badge android-badge">
-                                <i class="fab fa-android"></i> Android
+                                <i class="fa-brands fa-java"></i> JavaScript
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1894,10 +2028,14 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Doggy Date by Dog Days</h3>
-                        <p>Doggy Date by Dog Days is a community-driven app that helps pet owners plan local playdates by connecting nearby dog parents for shared walks and socialize-your-pup sessions.</p>
+                        <p>Doggy Date by Dog Days is a community-driven app that helps pet owners plan local playdates
+                            by connecting nearby dog parents for shared walks and socialize-your-pup sessions.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1917,10 +2055,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Travel Wallet APP</h3>
-                        <p>Travel Wallet APP is a shopping-focused app offering “Buy 1 Get 1” discount deals across Ontario, Canada—covering accommodations, food & drink, attractions, and services with instant redemption and family-sharing offers.</p>
+                        <p>Travel Wallet APP is a shopping-focused app offering “Buy 1 Get 1” discount deals across
+                            Ontario, Canada—covering accommodations, food & drink, attractions, and services with
+                            instant redemption and family-sharing offers.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1940,10 +2083,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Added Food Delivery</h3>
-                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius on their initial order. Added lets users add more stops from different restaurants on 1 order.</p>
+                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius
+                            on their initial order. Added lets users add more stops from different restaurants on 1
+                            order.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1963,10 +2111,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Added Restaurant</h3>
-                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius on their initial order. Added lets users add more stops from different restaurants on 1 order.</p>
+                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius
+                            on their initial order. Added lets users add more stops from different restaurants on 1
+                            order.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -1986,10 +2139,15 @@
                     </div>
                     <div class="portfolio-content">
                         <h3>Added Driver</h3>
-                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius on their initial order. Added lets users add more stops from different restaurants on 1 order.</p>
+                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius
+                            on their initial order. Added lets users add more stops from different restaurants on 1
+                            order.</p>
                         <div class="platform-badges">
                             <span class="platform-badge ios-badge">
                                 <i class="fab fa-apple"></i> iOS
+                            </span>
+                            <span class="platform-badge android-badge">
+                                <i class="fa-brands fa-swift"></i> Swift
                             </span>
                         </div>
                         <div class="portfolio-buttons">
@@ -2121,6 +2279,9 @@
                 <a href="https://www.linkedin.com/in/patelmeet12" target="_blank" class="social-link"
                     aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://medium.com/@patelmeet12" target="_blank" class="social-link" aria-label="Medium">
+                    <i class="fa-brands fa-medium"></i>
                 </a>
                 <a href="https://x.com/patelmeet_12" target="_blank" class="social-link" aria-label="Twitter">
                     <i class="fab fa-twitter"></i>
