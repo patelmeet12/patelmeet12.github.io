@@ -7,19 +7,22 @@ import { PortfolioSection } from "./components/PortfolioSection";
 import { StartProjectSection } from "./components/StartProjectSection";
 import { SocialSection } from "./components/SocialSection";
 import { Footer } from "./components/Footer";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export default function App() {
   return (
-    <div className="min-h-screen">
-      <AvailabilityBanner />
-      <Header />
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <PortfolioSection />
-      <StartProjectSection />
-      <SocialSection />
-      <Footer />
-    </div>
+    <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
+      <div className="min-h-screen">
+        <AvailabilityBanner />
+        <Header />
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <PortfolioSection />
+        <StartProjectSection />
+        <SocialSection />
+        <Footer />
+      </div>
+    </ThemeProvider>
   );
 }

@@ -3,239 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meet Patel - Senior iOS Developer Portfolio</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
-    <!-- Custom CSS -->
-    <style>
-        :root {
-            --font-size: 14px;
-            --background: #ffffff;
-            --foreground: oklch(0.145 0 0);
-            --card: #ffffff;
-            --card-foreground: oklch(0.145 0 0);
-            --popover: oklch(1 0 0);
-            --popover-foreground: oklch(0.145 0 0);
-            --primary: #030213;
-            --primary-foreground: oklch(1 0 0);
-            --secondary: oklch(0.95 0.0058 264.53);
-            --secondary-foreground: #030213;
-            --muted: #ececf0;
-            --muted-foreground: #717182;
-            --accent: #e9ebef;
-            --accent-foreground: #030213;
-            --destructive: #d4183d;
-            --destructive-foreground: #ffffff;
-            --border: rgba(0, 0, 0, 0.1);
-            --input: transparent;
-            --input-background: #f3f3f5;
-            --switch-background: #cbced4;
-            --font-weight-medium: 500;
-            --font-weight-normal: 400;
-            --ring: oklch(0.708 0 0);
-            --radius: 0.625rem;
-        }
-
-        .dark {
-            --background: oklch(0.145 0 0);
-            --foreground: oklch(0.985 0 0);
-            --card: oklch(0.145 0 0);
-            --card-foreground: oklch(0.985 0 0);
-            --primary: oklch(0.985 0 0);
-            --primary-foreground: oklch(0.205 0 0);
-            --secondary: oklch(0.269 0 0);
-            --secondary-foreground: oklch(0.985 0 0);
-            --muted: oklch(0.269 0 0);
-            --muted-foreground: oklch(0.708 0 0);
-            --border: oklch(0.269 0 0);
-        }
-
-        html {
-            font-size: var(--font-size);
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--background);
-            color: var(--foreground);
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, #030213, #2563eb, #7c3aed);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .availability-banner {
-            animation: slideDown 0.5s ease-out;
-        }
-
-        .pulse-animation {
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .portfolio-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-100%); }
-            to { transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .spin {
-            animation: spin 2s linear infinite;
-        }
-
-        .hidden-portfolio {
-            display: none;
-        }
-
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            z-index: 1000;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.error {
-            background: #ef4444;
-        }
-
-        /* Custom Tailwind config */
-        .btn-primary {
-            background: var(--primary);
-            color: var(--primary-foreground);
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            padding: 12px 24px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .btn-outline:hover {
-            background: var(--accent);
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background: var(--input-background);
-            font-size: 14px;
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(3, 2, 19, 0.1);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .badge-blue { background: #dbeafe; color: #1e40af; }
-        .badge-purple { background: #e9d5ff; color: #7c2d12; }
-        .badge-cyan { background: #cffafe; color: #0e7490; }
-        .badge-green { background: #dcfce7; color: #166534; }
-        .badge-indigo { background: #e0e7ff; color: #3730a3; }
-    </style>
+    <title>Meet Patel - iOS Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+        <svg id="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="m12 1-1-1m0 22 1 1m11-12h1M1 12H0M20.5 20.5l.7.7M2.8 2.8l.7.7m14.8 14.8l.7-.7M2.8 21.2l-.7-.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <svg id="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 </head>
-<body class="min-h-screen">
+<body>
     <!-- Availability Banner -->
-    <div class="availability-banner bg-green-500 text-white py-2 px-6 text-center">
-        <div class="flex items-center justify-center gap-2 pulse-animation">
-            <i data-lucide="check-circle" class="w-4 h-4 spin"></i>
-            <span class="text-sm font-medium">
-                🎉 Available for new opportunities - Let's build something amazing together!
-            </span>
+    <div id="availability-banner" class="availability-banner">
+        <div class="banner-content">
+            <div class="banner-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <span>🎉 Available for new opportunities - Let's build something amazing together!</span>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center fade-in">
-            <p class="text-gray-500 mb-2">Hello, I'm</p>
-            <div class="relative mb-6">
-                <h1 class="text-4xl md:text-6xl font-bold mb-2 gradient-text">Meet Patel</h1>
+    <!-- Header -->
+    <header id="header" class="header">
+        <div class="header-container">
+            <div class="header-content">
+                <!-- Logo and Name -->
+                <div class="header-logo">
+                    <div class="logo">
+                        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#030213" />
+                                    <stop offset="50%" stop-color="#2563eb" />
+                                    <stop offset="100%" stop-color="#7c3aed" />
+                                </linearGradient>
+                                <linearGradient id="logoGradientReverse" x1="100%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#7c3aed" />
+                                    <stop offset="50%" stop-color="#2563eb" />
+                                    <stop offset="100%" stop-color="#030213" />
+                                </linearGradient>
+                                <filter id="logoShadow" x="-50%" y="-50%" width="200%" height="200%">
+                                    <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.1)" />
+                                </filter>
+                            </defs>
+                            <circle cx="60" cy="60" r="55" fill="url(#logoGradient)" filter="url(#logoShadow)"/>
+                            <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <path d="M25 45 L25 75 L30 75 L30 55 L40 70 L45 70 L55 55 L55 75 L60 75 L60 45 L52 45 L42.5 62 L32.5 45 Z" fill="white" />
+                            <path d="M70 45 L70 75 L75 75 L75 62.5 L88 62.5 C92 62.5 95 59.5 95 55.5 L95 52 C95 48 92 45 88 45 Z M75 50 L87 50 C89 50 90 51 90 52 L90 55.5 C90 56.5 89 57.5 87 57.5 L75 57.5 Z" fill="white" />
+                            <circle cx="35" cy="25" r="3" fill="rgba(255,255,255,0.6)" />
+                            <circle cx="85" cy="25" r="2" fill="rgba(255,255,255,0.4)" />
+                            <circle cx="25" cy="85" r="2" fill="rgba(255,255,255,0.4)" />
+                            <circle cx="95" cy="90" r="3" fill="rgba(255,255,255,0.6)" />
+                            <rect x="15" y="15" width="8" height="8" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                            <rect x="97" y="97" width="8" height="8" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                        </svg>
+                    </div>
+                    <div class="header-text hidden-mobile">
+                        <h4>Meet Patel</h4>
+                        <p>iOS Developer</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="desktop-nav">
+                    <button class="nav-link" onclick="scrollToSection('about')">About</button>
+                    <button class="nav-link" onclick="scrollToSection('skills')">Skills</button>
+                    <button class="nav-link" onclick="scrollToSection('portfolio')">Portfolio</button>
+                    <button class="nav-link" onclick="scrollToSection('contact')">Contact</button>
+                </nav>
+
+                <!-- Desktop CTA and Theme Toggle -->
+                <div class="desktop-cta">
+                    <button id="theme-toggle-desktop" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+                        <svg id="theme-icon-light-desktop" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                            <path d="m12 1-1-1m0 22 1 1m11-12h1M1 12H0M20.5 20.5l.7.7M2.8 2.8l.7.7m14.8 14.8l.7-.7M2.8 21.2l-.7-.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <svg id="theme-icon-dark-desktop" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="btn btn-primary" onclick="scrollToSection('contact')">Let's Talk</button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <svg id="menu-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg id="close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
             </div>
-            <p class="text-xl text-gray-500 mb-6">Senior iOS Developer</p>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu">
+                <nav class="mobile-nav">
+                    <button class="mobile-nav-link" onclick="scrollToSection('about')">About</button>
+                    <button class="mobile-nav-link" onclick="scrollToSection('skills')">Skills</button>
+                    <button class="mobile-nav-link" onclick="scrollToSection('portfolio')">Portfolio</button>
+                    <button class="mobile-nav-link" onclick="scrollToSection('contact')">Contact</button>
+                    <button class="btn btn-primary mobile-cta" onclick="scrollToSection('contact')">Let's Talk</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg"></div>
+        <div class="hero-container">
+            <!-- Logo and Greeting -->
+            <div class="hero-logo">
+                <div class="logo-xl">
+                    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="heroLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#030213" />
+                                <stop offset="50%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="#7c3aed" />
+                            </linearGradient>
+                            <linearGradient id="heroLogoGradientReverse" x1="100%" y1="100%" x2="0%" y2="0%">
+                                <stop offset="0%" stop-color="#7c3aed" />
+                                <stop offset="50%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="#030213" />
+                            </linearGradient>
+                            <filter id="heroLogoShadow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.1)" />
+                            </filter>
+                        </defs>
+                        <circle cx="60" cy="60" r="55" fill="url(#heroLogoGradient)" filter="url(#heroLogoShadow)"/>
+                        <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                        <path d="M25 45 L25 75 L30 75 L30 55 L40 70 L45 70 L55 55 L55 75 L60 75 L60 45 L52 45 L42.5 62 L32.5 45 Z" fill="white" />
+                        <path d="M70 45 L70 75 L75 75 L75 62.5 L88 62.5 C92 62.5 95 59.5 95 55.5 L95 52 C95 48 92 45 88 45 Z M75 50 L87 50 C89 50 90 51 90 52 L90 55.5 C90 56.5 89 57.5 87 57.5 L75 57.5 Z" fill="white" />
+                        <circle cx="35" cy="25" r="3" fill="rgba(255,255,255,0.6)" />
+                        <circle cx="85" cy="25" r="2" fill="rgba(255,255,255,0.4)" />
+                        <circle cx="25" cy="85" r="2" fill="rgba(255,255,255,0.4)" />
+                        <circle cx="95" cy="90" r="3" fill="rgba(255,255,255,0.6)" />
+                        <rect x="15" y="15" width="8" height="8" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                        <rect x="97" y="97" width="8" height="8" rx="2" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+                    </svg>
+                </div>
+                <p class="hero-greeting">Hello, I'm</p>
+            </div>
+
+            <div class="hero-content">
+                <div class="hero-name">
+                    <h1 class="hero-title">Meet Patel</h1>
+                    <div class="hero-glow"></div>
+                </div>
+                
+                <p class="hero-subtitle">Senior iOS Developer</p>
+            </div>
             
-            <div class="flex flex-wrap justify-center gap-2 mb-6">
+            <div class="hero-badges">
                 <span class="badge badge-blue">Swift</span>
                 <span class="badge badge-purple">SwiftUI</span>
                 <span class="badge badge-cyan">Flutter</span>
@@ -243,116 +172,147 @@
                 <span class="badge badge-indigo">FlutterFlow</span>
             </div>
             
-            <p class="mb-8 text-gray-500 max-w-2xl mx-auto">
+            <p class="hero-description">
                 Passionate iOS developer with 7+ years of experience creating exceptional mobile applications. 
                 I specialize in Swift, SwiftUI, Flutter, FlutterFlow, and React Native, delivering high-quality, 
                 scalable solutions for startups, SMBs, and enterprises worldwide.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button class="btn-primary" onclick="scrollToSection('portfolio')">
-                    View Portfolio
-                </button>
-                <button class="btn-outline" onclick="downloadResume()">
-                    <i data-lucide="download" class="w-4 h-4 mr-2 inline"></i>
+            <div class="hero-actions">
+                <button class="btn btn-primary btn-lg" onclick="scrollToSection('portfolio')">View Portfolio</button>
+                <button class="btn btn-outline btn-lg" onclick="handleDownloadResume()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                     Download Resume
                 </button>
-                <button class="btn-outline" onclick="scrollToSection('contact')">
-                    Get In Touch
-                </button>
+                <button class="btn btn-outline btn-lg" onclick="scrollToSection('contact')">Get In Touch</button>
+            </div>
+
+            <!-- Scroll indicator -->
+            <div class="scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-dot"></div>
+                </div>
+                <p class="scroll-text">Scroll to explore</p>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="py-20 px-6 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Why Choose Me?</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto">
-                    With over 7 years of dedicated experience in mobile app development, I bring deep technical expertise 
-                    and a passion for creating exceptional user experiences.
-                </p>
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Me?</h2>
+                <p>With over 7 years of dedicated experience in mobile app development, I bring deep technical expertise and a passion for creating exceptional user experiences.</p>
             </div>
 
-            <div class="grid lg:grid-cols-3 gap-8 mb-16">
-                <div class="card p-6 text-center">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="award" class="w-8 h-8 text-blue-600"></i>
+            <!-- Experience Highlights -->
+            <div class="highlights-grid">
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    <h4 class="text-lg font-semibold mb-3">7+ Years of Excellence</h4>
-                    <p class="text-gray-500 text-sm">Proven track record in iOS development with consistent delivery of high-quality applications</p>
+                    <h4>7+ Years of Excellence</h4>
+                    <p>Proven track record in iOS development with consistent delivery of high-quality applications</p>
                 </div>
-
-                <div class="card p-6 text-center">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="users" class="w-8 h-8 text-green-600"></i>
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    <h4 class="text-lg font-semibold mb-3">2M+ Users Served</h4>
-                    <p class="text-gray-500 text-sm">My applications have reached millions of users across various industries and platforms</p>
+                    <h4>2M+ Users Served</h4>
+                    <p>My applications have reached millions of users across various industries and platforms</p>
                 </div>
-
-                <div class="card p-6 text-center">
-                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i data-lucide="zap" class="w-8 h-8 text-purple-600"></i>
+                <div class="highlight-card">
+                    <div class="highlight-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    <h4 class="text-lg font-semibold mb-3">End-to-End Expertise</h4>
-                    <p class="text-gray-500 text-sm">From concept to App Store deployment, I handle every aspect of mobile app development</p>
+                    <h4>End-to-End Expertise</h4>
+                    <p>From concept to App Store deployment, I handle every aspect of mobile app development</p>
                 </div>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h3 class="text-2xl font-bold mb-6">Technical Leadership & Innovation</h3>
-                    <p class="text-gray-500 mb-6">
-                        Throughout my career, I've collaborated with startups, SMBs, and large enterprises, consistently 
-                        delivering projects on time and within budget. My deep understanding of mobile app architecture, 
-                        UI/UX design principles, and modern development frameworks enables me to create scalable, 
-                        maintainable solutions.
-                    </p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Technical Leadership & Innovation</h3>
+                    <p>Throughout my career, I've collaborated with startups, SMBs, and large enterprises, consistently delivering projects on time and within budget. My deep understanding of mobile app architecture, UI/UX design principles, and modern development frameworks enables me to create scalable, maintainable solutions.</p>
                     
-                    <div class="flex gap-4">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-blue-600">15+</div>
-                            <div class="text-sm text-gray-500">Apps Published</div>
+                    <p>I stay at the forefront of iOS development trends, leveraging both traditional coding approaches and modern low-code platforms like FlutterFlow to provide cost-effective solutions with fast turnarounds without compromising quality.</p>
+
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Apps Published</div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-green-600">100%</div>
-                            <div class="text-sm text-gray-500">On-Time Delivery</div>
+                        <div class="stat">
+                            <div class="stat-number green">100%</div>
+                            <div class="stat-label">On-Time Delivery</div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold text-purple-600">4.8★</div>
-                            <div class="text-sm text-gray-500">Average Rating</div>
+                        <div class="stat">
+                            <div class="stat-number purple">4.8★</div>
+                            <div class="stat-label">Average Rating</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card p-6">
-                    <h4 class="text-lg font-semibold mb-4">Core Expertise</h4>
-                    <div class="space-y-3">
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-0.5"></i>
-                            <span class="text-sm">Native iOS development with Swift & SwiftUI</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-0.5"></i>
-                            <span class="text-sm">Cross-platform solutions with Flutter & React Native</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-0.5"></i>
-                            <span class="text-sm">Low-code development with FlutterFlow</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-0.5"></i>
-                            <span class="text-sm">API integration and third-party libraries</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-0.5"></i>
-                            <span class="text-sm">App performance optimization and security</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i data-lucide="check-circle" class="w-5 h-5 text-green-500 mt-0.5"></i>
-                            <span class="text-sm">App Store submission and compliance</span>
+                <div class="about-capabilities">
+                    <div class="card">
+                        <h4>Core Expertise</h4>
+                        <div class="capabilities-list">
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Native iOS development with Swift & SwiftUI</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Cross-platform solutions with Flutter & React Native</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Low-code development with FlutterFlow</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>API integration and third-party libraries</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Push notifications and real-time features</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>App performance optimization and security</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>App Store submission and compliance</span>
+                            </div>
+                            <div class="capability-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Code reviews and technical mentoring</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -361,484 +321,383 @@
     </section>
 
     <!-- Skills Section -->
-    <section class="py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Technical Skills</h2>
-            <p class="text-gray-500 mb-12">Technologies and frameworks I work with</p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">📱</div>
-                    <h4 class="font-semibold mb-2">Swift</h4>
-                    <p class="text-sm text-gray-500">Native iOS Development</p>
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Technical Expertise</h2>
+                <p>Comprehensive skill set spanning native development, cross-platform solutions, and modern development practices</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">📱</div>
+                    <h4>Native iOS</h4>
+                    <p>Building native iOS applications with modern Swift and SwiftUI</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Swift</span>
+                        <span class="skill-tag">Objective-C</span>
+                        <span class="skill-tag">SwiftUI</span>
+                        <span class="skill-tag">UIKit</span>
+                    </div>
                 </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">🎨</div>
-                    <h4 class="font-semibold mb-2">SwiftUI</h4>
-                    <p class="text-sm text-gray-500">Modern UI Framework</p>
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h4>Cross-Platform</h4>
+                    <p>Creating apps that work seamlessly across iOS and Android</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Flutter</span>
+                        <span class="skill-tag">React Native</span>
+                        <span class="skill-tag">Dart</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
                 </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">🦋</div>
-                    <h4 class="font-semibold mb-2">Flutter</h4>
-                    <p class="text-sm text-gray-500">Cross-platform Apps</p>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h4>Low-Code/No-Code</h4>
+                    <p>Rapid development with modern low-code platforms</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">FlutterFlow</span>
+                        <span class="skill-tag">Firebase</span>
+                        <span class="skill-tag">Supabase</span>
+                        <span class="skill-tag">REST APIs</span>
+                    </div>
                 </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">⚛️</div>
-                    <h4 class="font-semibold mb-2">React Native</h4>
-                    <p class="text-sm text-gray-500">JavaScript Mobile Apps</p>
+                <div class="skill-card">
+                    <div class="skill-icon">🔗</div>
+                    <h4>Backend & APIs</h4>
+                    <p>Building robust backend services and API integrations</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                    </div>
                 </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">⚡</div>
-                    <h4 class="font-semibold mb-2">FlutterFlow</h4>
-                    <p class="text-sm text-gray-500">Low-code Platform</p>
+                <div class="skill-card">
+                    <div class="skill-icon">🛠️</div>
+                    <h4>DevOps & Tools</h4>
+                    <p>Professional development workflow and deployment</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Xcode</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Jenkins</span>
+                        <span class="skill-tag">TestFlight</span>
+                    </div>
                 </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">🔗</div>
-                    <h4 class="font-semibold mb-2">REST APIs</h4>
-                    <p class="text-sm text-gray-500">Backend Integration</p>
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h4>Design & UX</h4>
+                    <p>Creating intuitive and beautiful user experiences</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Sketch</span>
+                        <span class="skill-tag">Adobe XD</span>
+                        <span class="skill-tag">Prototyping</span>
+                    </div>
                 </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">☁️</div>
-                    <h4 class="font-semibold mb-2">Firebase</h4>
-                    <p class="text-sm text-gray-500">Cloud Services</p>
-                </div>
-                <div class="card p-6 text-center">
-                    <div class="text-4xl mb-3">📊</div>
-                    <h4 class="font-semibold mb-2">Core Data</h4>
-                    <p class="text-sm text-gray-500">Data Management</p>
+            </div>
+
+            <!-- Additional Skills Cloud -->
+            <div class="additional-skills">
+                <h3>Additional Technologies</h3>
+                <div class="tech-cloud">
+                    <span class="tech-tag">Core Data</span>
+                    <span class="tech-tag">CloudKit</span>
+                    <span class="tech-tag">Push Notifications</span>
+                    <span class="tech-tag">In-App Purchases</span>
+                    <span class="tech-tag">ARKit</span>
+                    <span class="tech-tag">CoreML</span>
+                    <span class="tech-tag">MapKit</span>
+                    <span class="tech-tag">HealthKit</span>
+                    <span class="tech-tag">WatchKit</span>
+                    <span class="tech-tag">GraphQL</span>
+                    <span class="tech-tag">WebSocket</span>
+                    <span class="tech-tag">OAuth</span>
+                    <span class="tech-tag">CI/CD</span>
+                    <span class="tech-tag">Unit Testing</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 px-6 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Featured Projects</h2>
-                <p class="text-gray-500">Showcasing 14 published applications across various platforms</p>
+    <section id="portfolio" class="portfolio-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Portfolio</h2>
+                <p>14 successful mobile applications across various industries, all available on the App Store</p>
             </div>
 
-            <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Portfolio items will be generated by JavaScript -->
+            <div class="portfolio-grid" id="portfolio-grid">
+                <!-- Portfolio items will be populated by JavaScript -->
             </div>
 
-            <div class="text-center mt-12">
-                <button id="view-more-btn" class="btn-outline" onclick="togglePortfolio()">
-                    View More Projects
+            <div class="portfolio-actions" id="portfolio-actions">
+                <button class="btn btn-outline btn-lg" id="view-more-btn" onclick="showAllApps()">
+                    View More (<span id="remaining-count">8</span> more apps)
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- Contact Form Section -->
-    <section id="contact" class="py-20 px-6 bg-gradient-to-r from-blue-50 to-purple-50">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold mb-4">Start Your Project</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto">
-                    Tell me about your iOS app idea and let's discuss how I can help bring it to life.
-                </p>
+    <!-- Start Project Section -->
+    <section class="start-project-section">
+        <div class="container-small">
+            <div class="section-header">
+                <h2>Start Your Project</h2>
+                <p>Tell me about your iOS app idea and let's discuss how I can help bring it to life.</p>
             </div>
 
-            <div class="card p-8">
-                <h3 class="text-xl font-semibold mb-6">Project Inquiry Form</h3>
-                <form id="contact-form" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Name *</label>
-                            <input type="text" name="name" class="input" placeholder="Your full name" required>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Project Inquiry Form</h3>
+                </div>
+                <div class="card-content">
+                    <form id="project-form" class="project-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" placeholder="Your full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Email *</label>
-                            <input type="email" name="email" class="input" placeholder="your.email@example.com" required>
-                        </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Company/Organization</label>
-                        <input type="text" name="company" class="input" placeholder="Your company or organization (optional)">
-                    </div>
-
-                    <div class="grid md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Project Type</label>
-                            <select name="projectType" class="input">
-                                <option value="">Select project type</option>
-                                <option value="new-app">New iOS App</option>
-                                <option value="existing-app">Existing App Enhancement</option>
-                                <option value="cross-platform">Cross-Platform App</option>
-                                <option value="flutterflow">FlutterFlow Project</option>
-                                <option value="consultation">Consultation Only</option>
-                                <option value="other">Other</option>
-                            </select>
+                        <div class="form-group">
+                            <label for="company">Company/Organization</label>
+                            <input type="text" id="company" name="company" placeholder="Your company or organization (optional)">
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Timeline</label>
-                            <select name="timeline" class="input">
-                                <option value="">Select timeline</option>
-                                <option value="asap">ASAP</option>
-                                <option value="1-month">Within 1 month</option>
-                                <option value="2-3-months">2-3 months</option>
-                                <option value="3-6-months">3-6 months</option>
-                                <option value="6-months-plus">6+ months</option>
-                                <option value="flexible">Flexible</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Budget Range</label>
-                            <select name="budget" class="input">
-                                <option value="">Select budget range</option>
-                                <option value="under-5k">Under $5K</option>
-                                <option value="5k-10k">$5K - $10K</option>
-                                <option value="10k-25k">$10K - $25K</option>
-                                <option value="25k-50k">$25K - $50K</option>
-                                <option value="50k-plus">$50K+</option>
-                                <option value="discuss">Let's discuss</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Project Details *</label>
-                        <textarea name="details" class="input" rows="6" placeholder="Please describe your project idea, key features, target audience, and any specific requirements..." required></textarea>
-                    </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="projectType">Project Type</label>
+                                <select id="projectType" name="projectType">
+                                    <option value="">Select project type</option>
+                                    <option value="new-app">New iOS App</option>
+                                    <option value="existing-app">Existing App Enhancement</option>
+                                    <option value="cross-platform">Cross-Platform App</option>
+                                    <option value="flutterflow">FlutterFlow Project</option>
+                                    <option value="consultation">Consultation Only</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="timeline">Timeline</label>
+                                <select id="timeline" name="timeline">
+                                    <option value="">Select timeline</option>
+                                    <option value="asap">ASAP</option>
+                                    <option value="1-month">Within 1 month</option>
+                                    <option value="2-3-months">2-3 months</option>
+                                    <option value="3-6-months">3-6 months</option>
+                                    <option value="6-months-plus">6+ months</option>
+                                    <option value="flexible">Flexible</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget">Budget Range</label>
+                                <select id="budget" name="budget">
+                                    <option value="">Select budget range</option>
+                                    <option value="under-5k">Under $5K</option>
+                                    <option value="5k-10k">$5K - $10K</option>
+                                    <option value="10k-25k">$10K - $25K</option>
+                                    <option value="25k-50k">$25K - $50K</option>
+                                    <option value="50k-plus">$50K+</option>
+                                    <option value="discuss">Let's discuss</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <button type="submit" class="btn-primary w-full">
-                        <i data-lucide="send" class="w-4 h-4 mr-2 inline"></i>
-                        Send Project Inquiry
-                    </button>
-                </form>
+                        <div class="form-group">
+                            <label for="details">Project Details *</label>
+                            <textarea id="details" name="details" rows="6" placeholder="Please describe your project idea, key features, target audience, and any specific requirements..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-full">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Send Project Inquiry
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Social Section -->
-    <section class="py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4">Connect With Me</h2>
-            <p class="text-gray-500 mb-12">Let's connect and discuss your next project</p>
-            
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="https://github.com/meetpatel" class="card p-6 flex items-center gap-4 hover:shadow-lg transition-shadow">
-                    <i data-lucide="github" class="w-8 h-8"></i>
-                    <div class="text-left">
-                        <h4 class="font-semibold">GitHub</h4>
-                        <p class="text-sm text-gray-500">View my code</p>
+    <section id="contact" class="social-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Let's Connect</h2>
+                <p>Ready to bring your app ideas to life? Connect with me on social media or get in touch directly</p>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-card" onclick="window.open('tel:+15551234567', '_self')">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                </a>
-                
-                <a href="https://linkedin.com/in/meetpatel" class="card p-6 flex items-center gap-4 hover:shadow-lg transition-shadow">
-                    <i data-lucide="linkedin" class="w-8 h-8"></i>
-                    <div class="text-left">
-                        <h4 class="font-semibold">LinkedIn</h4>
-                        <p class="text-sm text-gray-500">Professional network</p>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+1 (555) 123-4567</p>
                     </div>
-                </a>
-                
-                <a href="https://twitter.com/meetpatel" class="card p-6 flex items-center gap-4 hover:shadow-lg transition-shadow">
-                    <i data-lucide="twitter" class="w-8 h-8"></i>
-                    <div class="text-left">
-                        <h4 class="font-semibold">Twitter</h4>
-                        <p class="text-sm text-gray-500">Latest updates</p>
+                </div>
+                <div class="contact-card" onclick="window.open('mailto:patelmeet12@example.com', '_self')">
+                    <div class="contact-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/>
+                        </svg>
                     </div>
-                </a>
+                    <div>
+                        <h4>Email</h4>
+                        <p>patelmeet12@example.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-grid">
+                <div class="social-card">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="social-content">
+                        <h4>GitHub</h4>
+                        <p>View my code repositories and open source contributions</p>
+                        <button class="btn btn-outline btn-sm" onclick="window.open('https://github.com/patelmeet12', '_blank')">Connect</button>
+                    </div>
+                </div>
+                <div class="social-card">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" fill="currentColor"/>
+                            <circle cx="4" cy="4" r="2" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="social-content">
+                        <h4>LinkedIn</h4>
+                        <p>Connect with me professionally and see my career journey</p>
+                        <button class="btn btn-outline btn-sm" onclick="window.open('https://www.linkedin.com/in/patelmeet12', '_blank')">Connect</button>
+                    </div>
+                </div>
+                <div class="social-card">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="social-content">
+                        <h4>Twitter</h4>
+                        <p>Follow me for tech insights and industry updates</p>
+                        <button class="btn btn-outline btn-sm" onclick="window.open('https://x.com/patelmeet_12', '_blank')">Connect</button>
+                    </div>
+                </div>
+                <div class="social-card">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="social-content">
+                        <h4>Medium</h4>
+                        <p>Read my articles about mobile development and tech trends</p>
+                        <button class="btn btn-outline btn-sm" onclick="window.open('https://medium.com/@patelmeet12', '_blank')">Connect</button>
+                    </div>
+                </div>
+                <div class="social-card">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="social-content">
+                        <h4>Upwork</h4>
+                        <p>Hire me for your next mobile app development project</p>
+                        <button class="btn btn-outline btn-sm" onclick="window.open('https://www.upwork.com/freelancers/~0167ccc74d85c427a1?mp_source=share', '_blank')">Connect</button>
+                    </div>
+                </div>
+                <div class="social-card">
+                    <div class="social-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <polygon points="23 7 16 12 23 17 23 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="social-content">
+                        <h4>Microsoft Teams</h4>
+                        <p>Schedule a meeting or collaboration session</p>
+                        <button class="btn btn-outline btn-sm" onclick="window.open('https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ', '_blank')">Connect</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 px-6 bg-gray-900 text-white">
-        <div class="max-w-6xl mx-auto text-center">
-            <div class="flex items-center justify-center gap-2 mb-4">
-                <span class="text-2xl">🍎</span>
-                <p class="text-lg">Built with passion for iOS</p>
+    <footer class="footer">
+        <div class="footer-bg"></div>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Logo and brand statement -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="miniGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#030213" />
+                                    <stop offset="100%" stop-color="#2563eb" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="40" height="40" rx="8" fill="url(#miniGradient)"/>
+                            <text x="20" y="28" text-anchor="middle" fill="white" font-size="18" font-weight="bold" font-family="system-ui, -apple-system, sans-serif">MP</text>
+                        </svg>
+                    </div>
+                    <div class="footer-text">
+                        <span class="apple-emoji">🍎</span>
+                        <p>Built with passion for iOS</p>
+                    </div>
+                </div>
+                
+                <!-- Location -->
+                <div class="footer-location">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 22s-8-4.5-8-11a8 8 0 0 1 16 0c0 6.5-8 11-8 11Z" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Based in San Francisco, CA • Available worldwide for remote projects</span>
+                </div>
+                
+                <!-- Divider -->
+                <div class="footer-divider"></div>
+                
+                <!-- Copyright and tagline -->
+                <div class="footer-info">
+                    <p class="footer-copyright">© 2025 Meet Patel - iOS App Developer. All rights reserved.</p>
+                    <p class="footer-tagline">Transforming ideas into exceptional mobile experiences</p>
+                </div>
+
+                <!-- Additional branding -->
+                <div class="footer-branding">
+                    <p>Crafted with precision • Delivered with excellence • Powered by innovation</p>
+                </div>
             </div>
-            
-            <div class="flex items-center justify-center gap-2 mb-4">
-                <i data-lucide="map-pin" class="w-4 h-4 opacity-75"></i>
-                <span class="text-sm opacity-90">
-                    Based in San Francisco, CA • Available worldwide for remote projects
-                </span>
-            </div>
-            
-            <p class="text-sm opacity-90">
-                © 2025 Meet Patel - iOS App Developer. All rights reserved.
-            </p>
-            <p class="text-xs mt-2 opacity-75">
-                Transforming ideas into exceptional mobile experiences
-            </p>
         </div>
     </footer>
 
-    <!-- Toast Container -->
-    <div id="toast" class="toast"></div>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toast-message"></span>
+    </div>
 
-    <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
-
-        // Portfolio data
-        const portfolioApps = [
-            {
-                title: "TaskMaster Pro",
-                description: "Advanced task management app with team collaboration features",
-                image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop",
-                platforms: ["iOS", "Swift"],
-                rating: 4.8,
-                downloads: "50K+"
-            },
-            {
-                title: "FitTracker Elite",
-                description: "Comprehensive fitness tracking with AI-powered insights",
-                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop",
-                platforms: ["Flutter", "iOS", "Android"],
-                rating: 4.9,
-                downloads: "100K+"
-            },
-            {
-                title: "ShopSmart",
-                description: "E-commerce app with AR product visualization",
-                image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop",
-                platforms: ["React Native", "iOS", "Android"],
-                rating: 4.7,
-                downloads: "200K+"
-            },
-            {
-                title: "MindfulMoments",
-                description: "Meditation and mindfulness app with guided sessions",
-                image: "https://images.unsplash.com/photo-1545389336-cf090694435e?w=400&h=300&fit=crop",
-                platforms: ["SwiftUI", "iOS"],
-                rating: 4.9,
-                downloads: "75K+"
-            },
-            {
-                title: "CryptoTracker",
-                description: "Real-time cryptocurrency tracking and portfolio management",
-                image: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=400&h=300&fit=crop",
-                platforms: ["Flutter", "iOS", "Android"],
-                rating: 4.6,
-                downloads: "150K+"
-            },
-            {
-                title: "RecipeVault",
-                description: "Smart recipe organizer with meal planning features",
-                image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop",
-                platforms: ["iOS", "Swift"],
-                rating: 4.8,
-                downloads: "80K+"
-            },
-            {
-                title: "WeatherWise",
-                description: "Advanced weather forecasting with location-based alerts",
-                image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=300&fit=crop",
-                platforms: ["FlutterFlow", "iOS", "Android"],
-                rating: 4.7,
-                downloads: "300K+"
-            },
-            {
-                title: "StudyBuddy",
-                description: "Educational app with interactive learning modules",
-                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop",
-                platforms: ["React Native", "iOS", "Android"],
-                rating: 4.9,
-                downloads: "120K+"
-            },
-            {
-                title: "TravelGuide",
-                description: "Comprehensive travel companion with offline maps",
-                image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop",
-                platforms: ["Swift", "iOS"],
-                rating: 4.8,
-                downloads: "90K+"
-            },
-            {
-                title: "PhotoEditor Pro",
-                description: "Professional photo editing with AI-powered filters",
-                image: "https://images.unsplash.com/photo-1609921141835-710b7fa6e438?w=400&h=300&fit=crop",
-                platforms: ["SwiftUI", "iOS"],
-                rating: 4.7,
-                downloads: "250K+"
-            },
-            {
-                title: "MusicStream",
-                description: "Music streaming app with personalized recommendations",
-                image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=300&fit=crop",
-                platforms: ["Flutter", "iOS", "Android"],
-                rating: 4.6,
-                downloads: "500K+"
-            },
-            {
-                title: "ExpenseTracker",
-                description: "Personal finance management with budget insights",
-                image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&h=300&fit=crop",
-                platforms: ["iOS", "Swift"],
-                rating: 4.8,
-                downloads: "180K+"
-            },
-            {
-                title: "NewsReader",
-                description: "Personalized news aggregator with offline reading",
-                image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&h=300&fit=crop",
-                platforms: ["React Native", "iOS", "Android"],
-                rating: 4.5,
-                downloads: "220K+"
-            },
-            {
-                title: "LanguageLearner",
-                description: "Interactive language learning with speech recognition",
-                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop",
-                platforms: ["FlutterFlow", "iOS", "Android"],
-                rating: 4.9,
-                downloads: "350K+"
-            }
-        ];
-
-        let showingAll = false;
-
-        // Generate portfolio items
-        function generatePortfolio() {
-            const portfolioGrid = document.getElementById('portfolio-grid');
-            const itemsToShow = showingAll ? portfolioApps.length : 6;
-            
-            portfolioGrid.innerHTML = '';
-            
-            for (let i = 0; i < itemsToShow; i++) {
-                const app = portfolioApps[i];
-                const platformBadges = app.platforms.map(platform => {
-                    const badgeClass = platform === 'iOS' ? 'badge-blue' : 
-                                     platform === 'Swift' ? 'badge-purple' : 
-                                     platform === 'Flutter' ? 'badge-cyan' : 
-                                     platform === 'SwiftUI' ? 'badge-indigo' : 
-                                     'badge-green';
-                    return `<span class="badge ${badgeClass}">${platform}</span>`;
-                }).join('');
-
-                const portfolioItem = `
-                    <div class="portfolio-item card overflow-hidden">
-                        <img src="${app.image}" alt="${app.title}" class="w-full h-48 object-cover">
-                        <div class="p-6">
-                            <h4 class="font-semibold mb-2">${app.title}</h4>
-                            <p class="text-sm text-gray-500 mb-4">${app.description}</p>
-                            <div class="flex flex-wrap gap-1 mb-4">
-                                ${platformBadges}
-                            </div>
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="flex items-center gap-1">
-                                    <i data-lucide="star" class="w-4 h-4 text-yellow-500"></i>
-                                    ${app.rating}
-                                </span>
-                                <span class="text-gray-500">${app.downloads} downloads</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                portfolioGrid.innerHTML += portfolioItem;
-            }
-            
-            // Update button text
-            const viewMoreBtn = document.getElementById('view-more-btn');
-            viewMoreBtn.textContent = showingAll ? 'Show Less' : 'View More Projects';
-            
-            // Re-initialize icons for new elements
-            lucide.createIcons();
-        }
-
-        // Toggle portfolio display
-        function togglePortfolio() {
-            showingAll = !showingAll;
-            generatePortfolio();
-        }
-
-        // Smooth scroll to section
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        // Download resume
-        function downloadResume() {
-            // Replace with actual resume download logic
-            showToast('Resume download will be available soon! Please contact me directly for now.', 'info');
-        }
-
-        // Show toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.className = `toast ${type === 'error' ? 'error' : ''} show`;
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // Handle form submission
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Basic validation
-            if (!data.name || !data.email || !data.details) {
-                showToast('Please fill in all required fields', 'error');
-                return;
-            }
-
-            // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(data.email)) {
-                showToast('Please enter a valid email address', 'error');
-                return;
-            }
-
-            // Create mailto link
-            const subject = `New iOS Project Inquiry from ${data.name}`;
-            const body = `
-Name: ${data.name}
-Email: ${data.email}
-Company/Organization: ${data.company || 'Not specified'}
-Project Type: ${data.projectType || 'Not specified'}
-Timeline: ${data.timeline || 'Not specified'}
-Budget Range: ${data.budget || 'Not specified'}
-
-Project Details:
-${data.details}
-            `.trim();
-
-            const mailtoLink = `mailto:patelmeet12@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.open(mailtoLink, '_self');
-            
-            showToast('Thank you! Your project inquiry has been sent.');
-            
-            // Reset form
-            this.reset();
-        });
-
-        // Fade in animation on scroll
-        function animateOnScroll() {
-            const elements = document.querySelectorAll('.fade-in');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            });
-
-            elements.forEach(el => observer.observe(el));
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            generatePortfolio();
-            animateOnScroll();
-            lucide.createIcons();
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
