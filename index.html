@@ -1,2425 +1,964 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meet Patel | iOS & Cross-Platform Developer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Meet Patel | iOS & Flutter Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+
+    <!-- Font Awesome 6.5.2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    colors: {
+                        black: '#0a0a0a',
+                        white: '#ffffff',
+                        accent: '#2563EB',
+                    },
+                    animation: {
+                        'marquee': 'marquee 40s linear infinite',
+                        'reveal': 'reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                        'spin-slow': 'spin 3s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        reveal: {
+                            '0%': { transform: 'translateY(100%)' },
+                            '100%': { transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        :root {
-            --primary: #0aff9d;
-            --primary-dark: #00cc7a;
-            --secondary: #00e6ff;
-            --dark: #121212;
-            --darker: #0a0a0a;
-            --darkest: #050505;
-            --light: #f8f9fa;
-            --light-gray: #e9ecef;
-            --gray: #adb5bd;
-            --coffee: #ffdd00;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: var(--light);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Custom Cursor */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition:
-                width 0.3s var(--transition),
-                height 0.3s var(--transition),
-                background-color 0.3s var(--transition);
-            mix-blend-mode: difference;
-        }
-
-        .cursor-follower {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(10, 255, 157, 0.3);
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
-            transition:
-                transform 0.6s var(--transition),
-                width 0.6s var(--transition),
-                height 0.6s var(--transition);
-        }
-
-        /* Layout */
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        section {
-            padding: 6rem 0;
-            position: relative;
-        }
-
-        /* Typography */
-        h1,
-        h2,
-        h3,
-        h4 {
-            line-height: 1.2;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-        }
-
-        h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-        }
-
-        h3 {
-            font-size: 1.5rem;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            color: var(--gray);
-        }
-
-        .text-gradient {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        /* Buttons */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.875rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            border: none;
-            cursor: none;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-            color: var(--darkest);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(10, 255, 157, 0.2);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: var(--darkest);
-        }
-
-        .btn-coffee {
-            background: linear-gradient(90deg, var(--coffee), #ffaa00);
-            color: #3d2600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+        body { transition: background-color 0.3s ease, color 0.3s ease; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
         
-        .btn-coffee:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 221, 0, 0.3);
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1.5rem 0;
-            z-index: 100;
-            transition: var(--transition);
-        }
-
-        header.scrolled {
-            background-color: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        nav ul {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 6rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 700px;
-            z-index: 2;
-        }
-
-        .hero-subtitle {
-            display: inline-block;
-            color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 1rem;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .hero-subtitle::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 1rem;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 2.5rem;
-        }
-
-        .coffee-section {
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50px;
-            max-width: fit-content;
-        }
-        
-        .coffee-section p {
-            margin: 0;
-            color: var(--light);
-            font-size: 0.95rem;
-        }
-
-        .hero-image {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 45%;
-            max-width: 600px;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(-50%) translateX(0);
-            }
-
-            50% {
-                transform: translateY(-50%) translateX(-20px);
-            }
-        }
-
-        /* About Section */
-        .about {
-            background-color: var(--darker);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-image {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .experience-badge {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: var(--darkest);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.25rem;
-            z-index: 2;
-        }
-
-        .about-text h2 {
-            margin-bottom: 2rem;
-        }
-
-        .about-highlight {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .download-cv {
-            margin-top: 2rem;
-        }
-
-        /* Skills Section */
-        .skills {
-            background-color: var(--darker);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-subtitle {
-            color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .skills-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .skill-category {
-            margin-bottom: 3rem;
-        }
-
-        .skill-category h3 {
-            margin-bottom: 2rem;
-            color: var(--primary);
-            font-size: 1.75rem;
-        }
-
-        .skill-item {
-            margin-bottom: 2rem;
-        }
-
-        .skill-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .skill-name {
-            font-weight: 600;
-        }
-
-        .skill-percent {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .skill-bar {
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 5px;
-            position: relative;
-        }
-
-        /* Expertise Section */
-        .expertise {
-            background-color: var(--darker);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-card {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 2.5rem 2rem;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .skill-card:hover {
-            transform: translateY(-10px);
-            background-color: rgba(10, 255, 157, 0.03);
-            border-color: rgba(10, 255, 157, 0.2);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.05);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        /* Achievements Section */
-        .achievements {
-            background-color: var(--darkest);
-            padding: 5rem 0;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-card {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
-            border: 1px solid rgba(10, 255, 157, 0.1);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-            background-color: rgba(10, 255, 157, 0.05);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.1);
-        }
-
-        .stat-value {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .stat-label {
-            font-size: 1.1rem;
-            color: var(--gray);
-        }
-
-        /* Process Section */
-        .process {
-            background-color: var(--darker);
-            padding: 6rem 0;
-        }
-
-        .timeline {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: rgba(10, 255, 157, 0.2);
-            z-index: 1;
-        }
-
-        .timeline-item {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            transition: var(--transition);
-        }
-
-        .timeline-item:hover {
-            transform: translateY(-10px);
-            background: rgba(10, 255, 157, 0.05);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.1);
-        }
-
-        .timeline-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: var(--darkest);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 700;
-        }
-
-        /* Tech Stack Section */
-        .tech-stack {
-            background-color: var(--darkest);
-            padding: 6rem 0;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-            justify-items: center;
-        }
-
-        .tech-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            width: 100%;
-            transition: var(--transition);
-        }
-
-        .tech-item:hover {
-            transform: translateY(-10px);
-            background: rgba(10, 255, 157, 0.05);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.1);
-        }
-
-        .tech-item i {
-            font-size: 3rem;
-            color: var(--primary);
-        }
-
-        .tech-item span {
-            font-weight: 500;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            background-color: var(--darker);
-            padding: 6rem 0;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 2.5rem;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-10px);
-            background-color: rgba(10, 255, 157, 0.03);
-            border-color: rgba(10, 255, 157, 0.2);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.05);
-        }
-
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 1rem;
-            left: 1.5rem;
-            font-size: 4rem;
-            color: rgba(10, 255, 157, 0.2);
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        .testimonial-content {
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-
-        .client-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .client-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: var(--darkest);
-        }
-
-        .client-details h4 {
-            margin-bottom: 0.25rem;
-            color: var(--light);
-        }
-
-        .client-details p {
-            margin: 0;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-
-        /* Portfolio Section - Redesigned */
-        .portfolio {
-            background-color: var(--darker);
-        }
-
-        .portfolio-filter {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1.5rem;
-            background: transparent;
-            border: 1px solid var(--gray);
-            color: var(--gray);
-            border-radius: 50px;
-            transition: var(--transition);
-            cursor: none;
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: var(--darkest);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .portfolio-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .portfolio-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(10, 255, 157, 0.3);
-            box-shadow: 0 15px 40px rgba(10, 255, 157, 0.1);
-        }
-
-        .portfolio-img-container {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .portfolio-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .portfolio-card:hover .portfolio-img {
-            transform: scale(1.05);
-        }
-
-        .portfolio-content {
-            padding: 1.8rem;
-        }
-
-        .portfolio-content h3 {
-            color: var(--light);
-            margin-bottom: 0.75rem;
-            font-size: 1.4rem;
-        }
-
-        .portfolio-content p {
-            color: var(--gray);
-            margin-bottom: 1.2rem;
-            min-height: 60px;
-        }
-
-        .platform-badges {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .platform-badge {
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .ios-badge {
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .android-badge {
-            background: rgba(61, 220, 132, 0.2);
-            color: #3DDC84;
-            border: 1px solid rgba(61, 220, 132, 0.3);
-        }
-
-        .portfolio-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .portfolio-buttons .btn {
-            flex: 1;
-            min-width: 140px;
-            text-align: center;
-            padding: 0.8rem 1.2rem;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .portfolio-buttons .btn i {
-            font-size: 1.1rem;
-        }
-
-        .btn-ios {
-            background: linear-gradient(90deg, #007AFF, #0047FF);
-            color: white;
-        }
-
-        .btn-android {
-            background: linear-gradient(90deg, #3DDC84, #34A853);
-            color: white;
-        }
-
-        .btn-ios:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
-        }
-
-        .btn-android:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(61, 220, 132, 0.3);
-        }
-
-        /* Certifications Section */
-        .certifications {
-            background-color: var(--darkest);
-            padding: 6rem 0;
-        }
-
-        .certs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .cert-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
-            border: 1px solid rgba(10, 255, 157, 0.1);
-        }
-
-        .cert-card:hover {
-            transform: translateY(-10px);
-            background: rgba(10, 255, 157, 0.05);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.1);
-        }
-
-        .cert-img {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--darkest);
-        }
-
-        .cert-card h4 {
-            color: var(--light);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Blog Section */
-        .blog {
-            background-color: var(--darker);
-            padding: 6rem 0;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .blog-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .blog-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .blog-image {
-            height: 200px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--darkest);
-            font-size: 3rem;
-        }
-
-        .blog-content {
-            padding: 1.5rem;
-        }
-
-        .blog-content h3 {
-            color: var(--light);
-            margin-bottom: 1rem;
-        }
-
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 1rem;
-        }
-
-        .read-more i {
-            margin-left: 0.5rem;
-            transition: transform 0.3s;
-        }
-
-        .read-more:hover i {
-            transform: translateX(5px);
-        }
-
-        /* CTA Section */
-        .cta-banner {
-            background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
-                url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 6rem 0;
-            text-align: center;
-        }
-
-        .cta-content {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .cta-content h2 {
-            color: var(--light);
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-content p {
-            color: var(--gray);
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            background-color: var(--darker);
-            text-align: center;
-        }
-
-        .contact-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .contact-item {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .contact-item:hover {
-            transform: translateY(-5px);
-            background-color: rgba(10, 255, 157, 0.03);
-            border-color: rgba(10, 255, 157, 0.2);
-            box-shadow: 0 10px 30px rgba(10, 255, 157, 0.05);
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(10, 255, 157, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--primary);
-            flex-shrink: 0;
-        }
-
-        .contact-text {
-            text-align: left;
-            flex: 1;
-        }
-
-        .contact-text h3 {
-            margin-bottom: 0.5rem;
-            color: var(--light);
-        }
-
-        .contact-text a,
-        .contact-text p {
-            color: var(--gray);
-            transition: var(--transition);
-            text-decoration: none;
-            display: block;
-            word-break: break-all;
-        }
-
-        .contact-text a:hover {
-            color: var(--primary);
-        }
-
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: grid;
-            gap: 0.5rem;
-            text-align: left;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: rgba(255, 255, 255, 0.03);
-            color: var(--light);
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(10, 255, 157, 0.2);
-        }
-
-        textarea.form-control {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(255, 255, 255, 0.05);
-            color: var(--light);
-            font-size: 1.25rem;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background-color: var(--primary);
-            color: var(--darkest);
-            transform: translateY(-5px);
-        }
-
-        /* Footer */
-        footer {
-            padding: 3rem 0;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-text {
-            color: var(--gray);
-            font-size: 0.875rem;
-        }
-
-        /* Animations */
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .shape {
-            position: absolute;
-            opacity: 0.05;
-            filter: blur(40px);
-        }
-
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            border-radius: 50%;
-            top: 20%;
-            left: 10%;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .shape-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--secondary);
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            top: 60%;
-            left: 70%;
-            animation: float 18s infinite ease-in-out reverse;
-            animation-delay: 2s;
-        }
-
-        .shape-3 {
-            width: 200px;
-            height: 200px;
-            background: var(--primary);
-            border-radius: 20% 80% 20% 80% / 80% 20% 80% 20%;
-            top: 30%;
-            left: 60%;
-            animation: float 12s infinite ease-in-out;
-            animation-delay: 4s;
-        }
-
-        /* Animation for contact items */
-        .animate-on-scroll {
+        .mask-text { overflow: hidden; display: block; }
+        .mask-text span { display: block; transform: translateY(100%); transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .is-visible .mask-text span { transform: translateY(0); }
+
+        /* Grid Background */
+        .bg-grid { background-size: 40px 40px; background-image: radial-gradient(circle, #0000001a 1px, transparent 1px); }
+        .dark .bg-grid { background-image: radial-gradient(circle, #ffffff1a 1px, transparent 1px); }
+
+        /* Loader */
+        #loader-wrapper { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background-color: #ffffff; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
+        .dark #loader-wrapper { background-color: #0a0a0a; }
+        #loader-wrapper.loaded { opacity: 0; visibility: hidden; }
+
+        /* Offline Toast */
+        #offline-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 10000; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        #offline-toast.show { bottom: 24px; }
+
+        /* Tab Animation */
+        .tab-btn.active { background-color: #2563EB; color: white; border-color: #2563EB; }
+
+        /* Modal Transitions (Fixed) */
+        .modal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: var(--transition);
+            visibility: hidden;
+            transition: all 0.3s ease;
         }
-
-        .animate-on-scroll.animated {
+        .modal.open {
             opacity: 1;
+            visibility: visible;
+        }
+        .modal.open .modal-content {
             transform: translateY(0);
         }
-
-        /* Responsive */
-        @media (max-width: 992px) {
-            .hero-image {
-                opacity: 0.3;
-                right: -10%;
-            }
-
-            .hero-content {
-                max-width: 100%;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-            }
-
-            .skills-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 4rem 0;
-            }
-
-            .hero {
-                padding-top: 8rem;
-                text-align: center;
-            }
-
-            .hero-subtitle::before {
-                display: none;
-            }
-
-            .hero-subtitle {
-                padding-left: 0;
-            }
-
-            .hero-actions {
-                justify-content: center;
-            }
-            
-            .coffee-section {
-                margin: 1.5rem auto 0;
-            }
-
-            .hero-image {
-                display: none;
-            }
-
-            nav ul {
-                gap: 1.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .contact-methods {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio-buttons .btn {
-                min-width: 100%;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-actions {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .contact-item {
-                flex-direction: column;
-                text-align: center;
-                padding: 1.5rem;
-            }
-
-            .contact-text {
-                text-align: center;
-            }
-
-            .contact-icon {
-                margin-bottom: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .contact-item {
-                padding: 1rem;
-            }
-
-            .contact-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.25rem;
-            }
+        .modal-content {
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
     </style>
 </head>
+<body class="bg-white text-black font-sans antialiased selection:bg-black selection:text-white dark:bg-black dark:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
 
-<body>
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
+    <!-- Preloader -->
+    <div id="loader-wrapper">
+        <div class="flex flex-col items-center gap-4">
+            <i class="ri-loader-4-line text-6xl text-accent animate-spin"></i>
+            <span class="font-display font-bold tracking-widest uppercase text-sm animate-pulse">Loading</span>
+        </div>
+    </div>
 
-    <!-- Header -->
-    <header id="header">
-        <div class="container header-container">
-            <div class="logo">MP</div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#expertise">Expertise</a></li>
-                    <li><a href="#portfolio">Work</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+    <!-- Offline Notification -->
+    <div id="offline-toast" class="flex items-center gap-3 px-6 py-4 bg-red-600 text-white rounded-full shadow-2xl">
+        <i class="ri-wifi-off-line text-xl animate-pulse"></i>
+        <span class="font-bold text-sm">No Internet Connection</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 top-0 py-4 px-6 md:px-12 backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-black/5 dark:border-white/5 transition-colors duration-300">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-xl font-display font-bold tracking-tighter uppercase relative z-50">
+                    Meet Patel
+                </a>
+                <div class="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-green-600 dark:text-green-400">Available</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest opacity-80">
+                    <a href="#about" class="group relative overflow-hidden h-5">
+                        <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">About</span>
+                        <span class="absolute top-0 left-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 text-accent">About</span>
+                    </a>
+                    <a href="#work" class="group relative overflow-hidden h-5">
+                        <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">Work</span>
+                        <span class="absolute top-0 left-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 text-accent">Work</span>
+                    </a>
+                    <a href="#contact" class="group relative overflow-hidden h-5">
+                        <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">Contact</span>
+                        <span class="absolute top-0 left-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 text-accent">Contact</span>
+                    </a>
+                </div>
+
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="relative z-50 w-10 h-10 rounded-full border border-black/10 dark:border-white/20 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 transition-all group flex items-center justify-center">
+                    <i class="ri-moon-clear-line text-lg dark:hidden transition-transform duration-500 group-hover:-rotate-12"></i>
+                    <i class="ri-sun-line text-lg hidden dark:block text-yellow-300 transition-transform duration-500 group-hover:rotate-90"></i>
+                </button>
+
+                <button onclick="openModal()" class="hidden md:flex px-6 py-2.5 bg-black text-white dark:bg-white dark:text-black rounded-full font-bold text-sm hover:scale-105 transition-transform items-center gap-2 shadow-lg">
+                    Start a Project
+                </button>
+
+                <button id="mobile-menu-btn" aria-label="Open Menu" class="md:hidden text-2xl z-50 focus:outline-none">
+                    <i class="ri-menu-3-line"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-white dark:bg-black z-40 transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center space-y-8 md:hidden">
+            <!-- Close Button Inside Menu -->
+            <button id="close-menu-btn" aria-label="Close Menu" class="absolute top-6 right-6 text-2xl p-2">
+                <i class="ri-close-line"></i>
+            </button>
+            
+            <a href="#about" class="mobile-link text-3xl font-display font-bold hover:text-accent">About</a>
+            <a href="#work" class="mobile-link text-3xl font-display font-bold hover:text-accent">Work</a>
+            <a href="#contact" class="mobile-link text-3xl font-display font-bold hover:text-accent">Contact</a>
+            <!-- Removed 'mobile-link' class to prevent double toggle logic on click -->
+            <button class="mt-8 px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-full font-bold" onclick="openModal()">
+                Start a Project
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex flex-col justify-center px-6 md:px-12 relative overflow-hidden bg-grid pt-20 pb-40">
+        <div class="max-w-7xl w-full mx-auto z-10">
+            <div class="reveal-group">
+                <div class="mask-text">
+                    <h1 class="text-6xl md:text-8xl lg:text-[9rem] font-display font-bold leading-[0.9] tracking-tighter mix-blend-exclusion dark:mix-blend-normal dark:text-white">
+                        iOS & <br> FLUTTER
+                    </h1>
+                </div>
+                <div class="mask-text mt-4">
+                    <h1 class="text-6xl md:text-8xl lg:text-[9rem] font-display font-bold leading-[0.9] tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-black to-gray-500 dark:from-white dark:to-gray-500">
+                        DEVELOPER
+                    </h1>
+                </div>
+                <div class="mask-text mt-6">
+                    <span class="text-sm md:text-base font-medium uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+                        Based in India
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-12 w-full left-0 overflow-hidden py-4 border-y border-black/5 dark:border-white/5 bg-white/50 dark:bg-black/50 backdrop-blur-sm flex">
+            <div class="animate-marquee flex gap-12 text-4xl font-display font-bold text-gray-300 dark:text-gray-700 uppercase opacity-50 select-none shrink-0 min-w-full justify-around items-center px-6">
+                <span>Swift UI</span> <span>•</span> <span>Flutter</span> <span>•</span> <span>React Native</span> <span>•</span> <span>FlutterFlow</span> <span>•</span> <span>Swift</span> <span>•</span> <span>Dart</span> <span>•</span> <span>Objective-C</span> <span>•</span> <span>UIKit</span> <span>•</span> <span>Mobile App Development</span> <span>•</span> <span>Firebase</span> <span>•</span> <span>Supabase</span> <span>•</span> <span>Clean Architecture</span> <span>•</span> <span>MVVM</span> <span>•</span> <span>BLoC</span> <span>•</span> <span>CI/CD</span> <span>•</span> <span>Mobile Design</span> <span>•</span>
+            </div>
+            <div class="animate-marquee flex gap-12 text-4xl font-display font-bold text-gray-300 dark:text-gray-700 uppercase opacity-50 select-none shrink-0 min-w-full justify-around items-center px-6">
+                <span>Swift UI</span> <span>•</span> <span>Flutter</span> <span>•</span> <span>React Native</span> <span>•</span> <span>FlutterFlow</span> <span>•</span> <span>Swift</span> <span>•</span> <span>Dart</span> <span>•</span> <span>Objective-C</span> <span>•</span> <span>UIKit</span> <span>•</span> <span>Mobile App Development</span> <span>•</span> <span>Firebase</span> <span>•</span> <span>Supabase</span> <span>•</span> <span>Clean Architecture</span> <span>•</span> <span>MVVM</span> <span>•</span> <span>BLoC</span> <span>•</span> <span>CI/CD</span> <span>•</span> <span>Mobile Design</span> <span>•</span>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <span class="hero-subtitle">iOS & Cross-Platform Developer</span>
-                <h1>Meet Patel</h1>
-                <p>With 7+ years of experience in mobile app development, I specialize in creating high-quality,
-                    scalable apps using Swift, SwiftUI, Flutter, React Native, and FlutterFlow for startups and
-                    enterprises.</p>
-
-                <div class="hero-actions">
-                    <a href="#portfolio" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    <!-- About Section -->
+    <section id="about" class="py-32 px-6 md:px-12 bg-white dark:bg-black border-b border-black/5 dark:border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-8">About Me</h2>
+                    <h3 class="text-3xl md:text-5xl font-display font-bold leading-tight mb-8">Meet Patel</h3>
+                    <h4 class="text-xl md:text-2xl font-display font-semibold text-accent mb-6">Professional iOS & Cross-Platform Developer</h4>
+                    <div class="prose dark:prose-invert text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8">
+                        <p class="mb-6">I'm a passionate mobile developer specializing in iOS and Flutter applications with expertise in Swift, SwiftUI, Flutter, React Native, and FlutterFlow. With 7+ years of professional experience, I've delivered numerous successful mobile projects for clients worldwide.</p>
+                        <p class="mb-6">My expertise includes building native iOS applications with Swift and SwiftUI, as well as cross-platform solutions using Flutter and React Native. I focus on creating apps that are not only visually appealing but also performant, scalable, and user-friendly.</p>
+                        <p>I leverage FlutterFlow to accelerate development while maintaining customization and scalability. When I'm not coding, you can find me contributing to open-source projects or exploring new technologies in the mobile development space.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-8 mt-12">
+                        <div class="border-l-2 border-black dark:border-white pl-6">
+                            <span class="block text-5xl font-bold font-display mb-2">7+</span>
+                            <span class="text-sm uppercase tracking-wider text-gray-500">Years Experience</span>
+                        </div>
+                        <div class="border-l-2 border-black dark:border-white pl-6">
+                            <span class="block text-5xl font-bold font-display mb-2">40+</span>
+                            <span class="text-sm uppercase tracking-wider text-gray-500">Apps Delivered</span>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="coffee-section">
-                    <p>Enjoy my work? Support my coffee addiction ☕</p>
-                    <a href="https://buymeacoffee.com/patelmeet12" target="_blank" class="btn btn-coffee">
-                        <i class="fas fa-mug-hot"></i> Buy Me a Coffee
-                    </a>
+                <div class="space-y-8">
+                    <h2 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Tech Stack</h2>
+                    <div>
+                        <div class="flex justify-between mb-2 font-bold font-display"><span>iOS (Swift/SwiftUI)</span><span>99%</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-800 h-1"><div class="bg-black dark:bg-white h-1 w-[99%]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2 font-bold font-display"><span>Flutter / Dart</span><span>90%</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-800 h-1"><div class="bg-black dark:bg-white h-1 w-[90%]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2 font-bold font-display"><span>React Native</span><span>80%</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-800 h-1"><div class="bg-black dark:bg-white h-1 w-[80%]"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2 font-bold font-display"><span>FlutterFlow</span><span>85%</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-800 h-1"><div class="bg-black dark:bg-white h-1 w-[85%]"></div></div>
+                    </div>
+                    <div class="pt-8">
+                        <h3 class="font-bold mb-4">Core Competencies</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">Clean Architecture</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">MVVM / BLoC</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">App Store Optimization</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">UI/UX Implementation</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">CI/CD Pipelines</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">Unit & UI Testing</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">REST & GraphQL APIs</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">Performance Tuning</span>
+                            <span class="px-4 py-2 border border-black/10 dark:border-white/10 rounded-full text-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors cursor-default">Agile/Scrum</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
-        </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-image">
-                    <div class="experience-badge">7+ Years Experience</div>
-                    <img src="https://ik.imagekit.io/pv1vahvl1/applewwdc22.jpeg"
-                        alt="Meet Patel">
+    <!-- Work Section -->
+    <section id="work" class="py-32 px-6 md:px-12 bg-gray-50 dark:bg-zinc-900/50">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col items-center mb-16 text-center">
+                <h2 class="text-5xl md:text-7xl font-display font-bold mb-6">Selected Work</h2>
+                <p class="text-gray-500 text-lg max-w-2xl mb-10">A comprehensive collection of high-performance mobile applications deployed to the App Store & Play Store.</p>
+                
+                <!-- Modern Segmented Filter Tabs -->
+                <div class="inline-flex p-1.5 rounded-full bg-white dark:bg-black/50 border border-black/5 dark:border-white/10 shadow-sm">
+                    <button class="tab-btn active px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white [&.active]:bg-black [&.active]:text-white dark:[&.active]:bg-white dark:[&.active]:text-black shadow-none [&.active]:shadow-md" onclick="filterProjects('all', this)">All</button>
+                    <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white [&.active]:bg-black [&.active]:text-white dark:[&.active]:bg-white dark:[&.active]:text-black shadow-none [&.active]:shadow-md" onclick="filterProjects('ios', this)">iOS</button>
+                    <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white [&.active]:bg-black [&.active]:text-white dark:[&.active]:bg-white dark:[&.active]:text-black shadow-none [&.active]:shadow-md" onclick="filterProjects('flutter', this)">Flutter</button>
+                    <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white [&.active]:bg-black [&.active]:text-white dark:[&.active]:bg-white dark:[&.active]:text-black shadow-none [&.active]:shadow-md" onclick="filterProjects('react', this)">React Native</button>
                 </div>
+            </div>
 
-                <div class="about-text">
-                    <span class="section-subtitle">About Me</span>
-                    <h2 class="text-gradient">Meet Patel</h2>
-                    <h3>Professional iOS & Flutter Developer</h3>
+            <!-- 3-Column Grid (Tech Watermark Design) -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="projects-grid">
+                
+                <!-- 0. Formzi (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <!-- Background Watermark -->
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Formzi</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Data Collection</span>
+                        </div>
+                    </div>
 
-                    <p>I'm a passionate mobile developer specializing in iOS and Flutter applications with expertise in
-                        Swift, SwiftUI, Flutter, React Native, and FlutterFlow. With <span class="about-highlight">7+
-                            years</span> of professional experience, I've delivered numerous successful mobile projects
-                        for clients worldwide.</p>
-
-                    <p>My expertise includes building native iOS applications with Swift and SwiftUI, as well as
-                        cross-platform solutions using Flutter and React Native. I focus on creating apps that are not
-                        only visually appealing but also performant, scalable, and user-friendly.</p>
-
-                    <p>I leverage FlutterFlow to accelerate development while maintaining customization and scalability.
-                        When I'm not coding, you can find me contributing to open-source projects or exploring new
-                        technologies in the mobile development space.</p>
-
-                    <div class="download-cv">
-                        <a href="https://drive.google.com/file/d/1icQgrsv71ZaSAVU6Wbpv02Ne7ONQCjaH/view?usp=sharing"
-                            target="_blank" class="btn btn-primary">
-                            <i class="fas fa-download"></i> Download CV
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/in/app/formzi/id1192981423" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
                         </a>
                     </div>
                 </div>
+
+                <!-- 1. Polstrat Cadre App (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Polstrat Cadre</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Management</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/us/app/polstrat-cadre-app/id6739358828" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. Neuro Physio Rx (Flutter) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="flutter">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-flutter-fill text-[180px] text-[#02569B]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-flutter-fill text-3xl text-[#02569B]"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Neuro Physio Rx</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Dart</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Healthcare</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4">
+                        <a href="https://apps.apple.com/in/app/neuro-physio-rx/id6478271730" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.app.neurophysiorx" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- 3. ShoppyWhere (React Native) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="react">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none">
+                        <i class="ri-reactjs-line text-[180px] text-[#61DAFB]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-reactjs-line text-3xl text-[#61DAFB]"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">ShoppyWhere</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">JS</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">E-Commerce</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4">
+                        <a href="https://apps.apple.com/it/app/shoppywhere/id6639615044" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.shoppywhere" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- 4. K-Go (React Native) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="react">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none">
+                        <i class="ri-reactjs-line text-[180px] text-[#61DAFB]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-reactjs-line text-3xl text-[#61DAFB]"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">K-Go</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">JS</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Transport</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4">
+                        <a href="https://apps.apple.com/us/app/k-go-book-a-ride/id1488105887" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.kgodriver" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- 5. DiNGr (Flutter) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="flutter">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-flutter-fill text-[180px] text-[#02569B]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-flutter-fill text-3xl text-[#02569B]"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">DiNGr</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Dart</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Social</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4">
+                        <a href="https://apps.apple.com/us/app/dingr/id6499414611" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.app.dingr" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- 6. Tradeasia (Flutter) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="flutter">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-flutter-fill text-[180px] text-[#02569B]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-flutter-fill text-3xl text-[#02569B]"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Tradeasia</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Dart</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">B2B</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4">
+                        <a href="https://apps.apple.com/sk/app/tradeasia/id6478198700" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.app.btwob" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- 7. Doggy Date (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Doggy Date</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Social</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/ca/app/doggy-date-by-dog-days/id1462254114" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 8. Travel Wallet APP (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Travel Wallet</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Finance</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/in/app/travel-wallet-app/id1569577459" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 9. Malpack Toolbox (React Native) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="react">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none">
+                        <i class="ri-reactjs-line text-[180px] text-[#61DAFB]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-reactjs-line text-3xl text-[#61DAFB]"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Malpack Toolbox</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">JS</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Tools</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4">
+                        <a href="https://apps.apple.com/gh/app/malpack-toolbox/id6477567834" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.app.malpack" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- 10. Nazaray (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Nazaray</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Lifestyle</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/in/app/nazaray/id6443620350" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 11. Added Food Delivery (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Added Food</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Delivery</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/us/app/added-food-delivery/id1626500994" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 12. Added Driver (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Added Driver</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Logistics</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/us/app/added-driver/id1626500465" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 13. Cintona (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Cintona</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Business</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/in/app/cintona/id1554648094" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 14. Stable Hub (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Stable Hub</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Equestrian</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/az/app/stable-hub/id1556437401" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 15. LittleSouls (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">LittleSouls</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Charity</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/ca/app/littlesouls/id1553078697" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 16. MindMapping - Resilience (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">MindMapping</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Productivity</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/us/app/mindmapping-resilience/id1626979283" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 17. Added Restaurant (iOS) -->
+                <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px]" data-category="ios">
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none">
+                        <i class="ri-apple-fill text-[180px]"></i>
+                    </div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10">
+                            <i class="ri-apple-fill text-3xl text-black dark:text-white"></i>
+                        </div>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Added Restaurant</h3>
+                        <div class="flex items-center gap-2 mb-6">
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+                            <span class="text-xs font-mono text-gray-500">Business</span>
+                        </div>
+                    </div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3">
+                        <a href="https://apps.apple.com/us/app/added-restaurant/id1626786117" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors">
+                            <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span>
+                            <span>App Store</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- More Projects Button -->
+            <div class="flex justify-center mt-16">
+                <button id="load-more-btn" class="px-8 py-3 rounded-full border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-800 text-sm font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all shadow-sm" onclick="loadMore()">More Projects</button>
             </div>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section class="skills" id="skills">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Technical Proficiencies</span>
-                <h2 class="text-gradient">My Skills</h2>
+    <!-- Footer / Contact -->
+    <footer id="contact" class="py-24 px-6 md:px-12 bg-black text-white relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gray-800 via-gray-500 to-gray-800"></div>
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+            <h2 class="text-6xl md:text-9xl font-display font-bold mb-8 tracking-tighter hover:text-gray-300 transition-colors cursor-pointer">LET'S TALK</h2>
+            <p class="text-xl text-gray-400 mb-12 max-w-2xl">Looking for a Senior Developer to lead your next mobile project? I am currently available for freelance and full-time opportunities.</p>
+            <a href="mailto:patelmeet0809@gmail.com" class="px-10 py-5 bg-white text-black rounded-full font-bold text-lg hover:scale-110 transition-transform mb-16 flex items-center gap-2"><i class="ri-mail-line"></i> patelmeet0809@gmail.com</a>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-12 text-2xl">
+                <a href="https://www.linkedin.com/in/patelmeet12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2"><i class="fa-brands fa-linkedin"></i><span class="text-xs font-sans tracking-widest uppercase opacity-50">LinkedIn</span></a>
+                <a href="https://github.com/patelmeet12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2"><i class="fa-brands fa-github"></i><span class="text-xs font-sans tracking-widest uppercase opacity-50">GitHub</span></a>
+                <a href="https://x.com/patelmeet_12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2"><i class="fa-brands fa-twitter"></i><span class="text-xs font-sans tracking-widest uppercase opacity-50">Twitter / X</span></a>
+                <a href="https://medium.com/@patelmeet12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2"><i class="fa-brands fa-medium"></i><span class="text-xs font-sans tracking-widest uppercase opacity-50">Medium</span></a>
+                <a href="https://www.upwork.com/freelancers/~0167ccc74d85c427a1?mp_source=share" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2"><i class="fa-brands fa-upwork"></i><span class="text-xs font-sans tracking-widest uppercase opacity-50">Upwork</span></a>
+                <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2"><i class="fa-solid fa-people-group"></i><span class="text-xs font-sans tracking-widest uppercase opacity-50">Teams</span></a>
             </div>
-
-            <div class="skills-container">
-                <div>
-                    <div class="skill-category">
-                        <h3>iOS Development</h3>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Swift</span>
-                                <span class="skill-percent">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 95%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">SwiftUI</span>
-                                <span class="skill-percent">80%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 80%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">UIKit</span>
-                                <span class="skill-percent">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 92%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Core Data</span>
-                                <span class="skill-percent">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill-category">
-                        <h3>Other Skills</h3>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Git & GitHub</span>
-                                <span class="skill-percent">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">RESTful APIs</span>
-                                <span class="skill-percent">92%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 92%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="skill-category">
-                        <h3>Cross-Platform</h3>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Flutter</span>
-                                <span class="skill-percent">95%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 95%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">FlutterFlow</span>
-                                <span class="skill-percent">70%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 70%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">React Native</span>
-                                <span class="skill-percent">60%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 60%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Dart</span>
-                                <span class="skill-percent">90%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 90%"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="skill-category">
-                        <h3>&nbsp;</h3>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">UI/UX Design</span>
-                                <span class="skill-percent">85%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 85%"></div>
-                            </div>
-                        </div>
-
-                        <div class="skill-item">
-                            <div class="skill-header">
-                                <span class="skill-name">Agile Methodology</span>
-                                <span class="skill-percent">88%</span>
-                            </div>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 88%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Expertise Section -->
-    <section class="expertise" id="expertise">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">What I Do</span>
-                <h2 class="text-gradient">My Expertise</h2>
-            </div>
-
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fa-brands fa-swift"></i></div>
-                    <h3>Swift & SwiftUI</h3>
-                    <p>Building modern, declarative iOS interfaces with SwiftUI and UIKit with deep understanding of
-                        Apple's ecosystem.</p>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fa-brands fa-app-store-ios"></i></div>
-                    <h3>iOS Development</h3>
-                    <p>Native iOS app development following Apple's Human Interface Guidelines and best practices.</p>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fa-brands fa-flutter"></i></div>
-                    <h3>Cross-Platform</h3>
-                    <p>Flutter and React Native development for building beautiful, performant cross-platform apps.</p>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fa-solid fa-bolt"></i></div>
-                    <h3>FlutterFlow</h3>
-                    <p>Rapid app development using FlutterFlow low-code platform with full customization capabilities.
-                    </p>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fa-solid fa-paint-brush"></i></div>
-                    <h3>UI/UX Design</h3>
-                    <p>Creating intuitive, user-friendly interfaces that follow modern design principles and patterns.
-                    </p>
-                </div>
-
-                <div class="skill-card">
-                    <div class="skill-icon"><i class="fa-solid fa-code-merge"></i></div>
-                    <h3>API Integration</h3>
-                    <p>Seamless integration with RESTful APIs, GraphQL, Firebase, and third-party services.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Achievements Section -->
-    <section class="achievements">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">My Milestones</span>
-                <h2 class="text-gradient">Key Achievements</h2>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">15+</div>
-                    <div class="stat-label">Projects Delivered</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">1M+</div>
-                    <div class="stat-label">App Downloads</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">95%</div>
-                    <div class="stat-label">Client Satisfaction</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">5</div>
-                    <div class="stat-label">Countries Served</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section - Redesigned -->
-    <section class="portfolio" id="portfolio">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">My Work</span>
-                <h2 class="text-gradient">Portfolio</h2>
-                <p>Explore my diverse range of mobile applications developed with cutting-edge technologies</p>
-            </div>
-
-            <div class="portfolio-filter">
-                <button class="filter-btn active" data-filter="all">All Projects</button>
-                <button class="filter-btn" data-filter="ios">iOS</button>
-                <button class="filter-btn" data-filter="flutter">Flutter</button>
-                <button class="filter-btn" data-filter="react">React Native</button>
-            </div>
-
-            <div class="portfolio-grid">
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/9e/4a/71/9e4a7192-d266-92f7-ad05-f416d323efc1/1_1.png/460x0w.webp"
-                            alt="Polstrat Cadre App" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Polstrat Cadre App</h3>
-                        <p>Polstrat’s Cadre App is a productivity tool for managing teams, volunteers and political
-                            cadres by assigning and tracking time‑based tasks and activities.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> SwiftUI
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/polstrat-cadre-app/id6739358828" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Flutter Project -->
-                <div class="portfolio-card" data-category="flutter">
-                    <div class="portfolio-img-container">
-                        <img src="https://mandaltherapeutics.com/images/screenshots/screenshot-1.jpg"
-                            alt="Neuro Physio Rx" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Neuro Physio Rx</h3>
-                        <p>Neuro Physio Rx. by Mandal Therapeutics Inc. is a personalized pain‑relief and physiotherapy
-                            app offering tailored exercise routines (mobility, neuromobility, yoga, meditation, vision,
-                            massage), progress tracking, expert education, and reminders to manage chronic or acute
-                            discomfort.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fa-brands fa-flutter"></i> Flutter
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-dart-lang"></i> Dart
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/in/app/neuro-physio-rx/id6478271730" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.app.neurophysiorx"
-                                target="_blank" class="btn btn-android">
-                                <i class="fab fa-android"></i> Android
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- React Native Project -->
-                <div class="portfolio-card" data-category="react">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/fb/9a/79/fb9a7949-d895-e4ef-ad82-cc5a4b897623/AppIcon-1x_U007emarketing-0-7-0-85-220-0.png/460x0w.webp"
-                            alt="ShoppyWhere" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>ShoppyWhere</h3>
-                        <p>ShoppyWhere is a global e‑commerce app offering immersive virtual tours of curated
-                            international stores, enabling users to discover and securely shop unique products from
-                            around the world with international shipping.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fa-brands fa-react"></i> React Native
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-java"></i> JavaScript
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/it/app/shoppywhere/id6639615044" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.shoppywhere" target="_blank"
-                                class="btn btn-android">
-                                <i class="fab fa-android"></i> Android
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/63/67/b7/6367b74b-5368-af78-7049-d9999f827aab/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/460x0w.webp"
-                            alt="Stable Hub" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Stable Hub</h3>
-                        <p>Stable Hub is a mobile platform built for racehorse trainers to streamline secure
-                            communication and update owners with photos, videos, and reminders in real‑time.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/az/app/stable-hub/id1556437401" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Flutter Project -->
-                <div class="portfolio-card" data-category="flutter">
-                    <div class="portfolio-img-container">
-                        <img src="https://www.dingrsports.com/public/website/images/screenshots/screenshot-1.jpg"
-                            alt="DiNGr" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>DiNGr</h3>
-                        <p>DiNGr is a free, season‑long DFS‑style fantasy sports app that lets users pick one MLB or NHL
-                            player each day to hit a home run, and compete over a full, half, or month‑long season to
-                            see who racks up the most HRs.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fa-brands fa-flutter"></i> Flutter
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-dart-lang"></i> Dart
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/dingr/id6499414611" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.app.dingr" target="_blank"
-                                class="btn btn-android">
-                                <i class="fab fa-android"></i> Android
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- React Native Project -->
-                <div class="portfolio-card" data-category="react">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fa/f9/29/faf929e6-ea99-fb74-e333-5f9b84ee3f4a/AppIcon-1x_U007emarketing-0-11-0-0-85-220-0.png/460x0w.webp"
-                            alt="Malpack Toolbox" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Malpack Toolbox</h3>
-                        <p>Malpack Toolbox by Malpack Ltd is a free industrial utility app that helps packaging
-                            professionals identify the ideal stretch film solution through cross‑referencing tools, film
-                            calculators, product brochures, and tutorial videos.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fa-brands fa-react"></i> React Native
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-java"></i> JavaScript
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/gh/app/malpack-toolbox/id6477567834" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.app.malpack" target="_blank"
-                                class="btn btn-android">
-                                <i class="fab fa-android"></i> Android
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://placehold.co/600x400/EEE/31343C?font=playfair-display&text=Coming%20Soon"
-                            alt="MindMapping - Resilience" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>MindMapping - Resilience</h3>
-                        <p>MindMapping – Resilience was an iOS app that analyzed genetic resilience or vulnerability to
-                            mental illness based on a user’s genetic profile.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> SwiftUI
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/mindmapping-resilience/id1626979283" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://placehold.co/600x400/EEE/31343C?font=playfair-display&text=Coming%20Soon"
-                            alt="Nazaray" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Nazaray</h3>
-                        <p>Nazaray is a horse‑racing fan platform offering behind‑the‑scenes videos, updates and
-                            community content centered on racehorses and industry personalities.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/in/app/nazaray/id6443620350" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="http://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/fb/fb/74/fbfb74ce-c546-c29c-062b-7fcb298ca21e/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/460x0w.webp"
-                            alt="LittleSouls" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>LittleSouls</h3>
-                        <p>LittleSouls is a mindfulness and wellness app for kids offering guided breathing exercises,
-                            calming games, yoga, music, and tracking tools to nurture inner calm and emotional
-                            resilience.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/ca/app/littlesouls/id1553078697" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple122/v4/04/8b/69/048b692c-19d7-604d-1c8a-9144d5105490/AppIcon-0-0-1x_U007emarketing-0-0-0-7-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/460x0w.webp"
-                            alt="Cintona" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Cintona</h3>
-                        <p>Cintona is a conference networking app that matches attendees based on their interests and
-                            competencies, lets them schedule meetings or workshops, and supports in-person or embedded
-                            video-chat interactions.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/in/app/cintona/id1554648094" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Flutter Project -->
-                <div class="portfolio-card" data-category="flutter">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/be/50/a0/be50a05b-c2d1-aead-e6c4-19d5c2b5451a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/460x0w.webp"
-                            alt="Tradeasia" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Tradeasia</h3>
-                        <p>Tradeasia is a B2B mobile app that lets industrial-grade chemical buyers request quotes,
-                            track shipments, and live‑chat with the Tradeasia team in real time.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fa-brands fa-flutter"></i> Flutter
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-dart-lang"></i> Dart
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/sk/app/tradeasia/id6478198700" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.app.btwob" target="_blank"
-                                class="btn btn-android">
-                                <i class="fab fa-android"></i> Android
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- React Native Project -->
-                <div class="portfolio-card" data-category="react">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource126/v4/b0/2f/df/b02fdf6a-3387-a60a-8b55-c9d469e29fa5/393c96ea-dfa8-496e-a830-94ae48937191_Simulator_Screen_Shot_-_iPhone_14_Plus_-_2023-08-14_at_12.46.41.png/460x0w.webp"
-                            alt="K-Go – Book a ride" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>K-Go – Book a ride</h3>
-                        <p>K‑Go – Book a ride (by Kids On The Go) is a Canada‑based transport app designed specifically
-                            for ages 5–17, enabling parents to schedule safe, vetted rides for kids with real‑time
-                            tracking and certified drivers in cities like Saskatoon.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fa-brands fa-react"></i> React Native
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-java"></i> JavaScript
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/k-go-book-a-ride/id1488105887" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                            <a href="https://play.google.com/store/apps/details?id=com.kgodriver" target="_blank"
-                                class="btn btn-android">
-                                <i class="fab fa-android"></i> Android
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://placehold.co/600x400/EEE/31343C?font=playfair-display&text=Coming%20Soon"
-                            alt="Doggy Date by Dog Days" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Doggy Date by Dog Days</h3>
-                        <p>Doggy Date by Dog Days is a community-driven app that helps pet owners plan local playdates
-                            by connecting nearby dog parents for shared walks and socialize-your-pup sessions.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/ca/app/doggy-date-by-dog-days/id1462254114" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/a0/92/2d/a0922d83-66a9-38d2-9633-cf48e8e27757/AppIcon-1x_U007emarketing-0-7-0-85-220.png/460x0w.webp"
-                            alt="Travel Wallet APP" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Travel Wallet APP</h3>
-                        <p>Travel Wallet APP is a shopping-focused app offering “Buy 1 Get 1” discount deals across
-                            Ontario, Canada—covering accommodations, food & drink, attractions, and services with
-                            instant redemption and family-sharing offers.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/in/app/travel-wallet-app/id1569577459" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://placehold.co/600x400/EEE/31343C?font=playfair-display&text=Coming%20Soon"
-                            alt="Added Food Delivery" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Added Food Delivery</h3>
-                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius
-                            on their initial order. Added lets users add more stops from different restaurants on 1
-                            order.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/added-food-delivery/id1626500994" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://placehold.co/600x400/EEE/31343C?font=playfair-display&text=Coming%20Soon"
-                            alt="Added Restaurant" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Added Restaurant</h3>
-                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius
-                            on their initial order. Added lets users add more stops from different restaurants on 1
-                            order.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/added-restaurant/id1626786117" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- iOS Project -->
-                <div class="portfolio-card" data-category="ios">
-                    <div class="portfolio-img-container">
-                        <img src="https://placehold.co/600x400/EEE/31343C?font=playfair-display&text=Coming%20Soon"
-                            alt="Added Driver" class="portfolio-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3>Added Driver</h3>
-                        <p>Added is a 1 stop delivery app that lets users add more restaurants within a defined radius
-                            on their initial order. Added lets users add more stops from different restaurants on 1
-                            order.</p>
-                        <div class="platform-badges">
-                            <span class="platform-badge ios-badge">
-                                <i class="fab fa-apple"></i> iOS
-                            </span>
-                            <span class="platform-badge android-badge">
-                                <i class="fa-brands fa-swift"></i> Swift
-                            </span>
-                        </div>
-                        <div class="portfolio-buttons">
-                            <a href="https://apps.apple.com/us/app/added-driver/id1626500465" target="_blank"
-                                class="btn btn-ios">
-                                <i class="fab fa-apple"></i> iOS
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section class="certifications">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Accreditations</span>
-                <h2 class="text-gradient">Certifications</h2>
-            </div>
-
-            <div class="certs-grid">
-                <div class="cert-card">
-                    <div class="cert-img">
-                        <i class="fa-brands fa-apple"></i>
-                    </div>
-                    <h4>Apple Certified Developer</h4>
-                    <p>iOS & Swift Specialist</p>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-img">
-                        <i class="fa-brands fa-google"></i>
-                    </div>
-                    <h4>Flutter Certified Developer</h4>
-                    <p>Cross-Platform Expert</p>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-img">
-                        <i class="fa-solid fa-code"></i>
-                    </div>
-                    <h4>React Native Professional</h4>
-                    <p>Advanced Cross-Platform</p>
-                </div>
-                <div class="cert-card">
-                    <div class="cert-img">
-                        <i class="fa-solid fa-cloud"></i>
-                    </div>
-                    <h4>Firebase Specialist</h4>
-                    <p>Backend & Authentication</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Client Feedback</span>
-                <h2 class="text-gradient">Testimonials</h2>
-            </div>
-
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>Meet delivered our app ahead of schedule with exceptional quality. His FlutterFlow expertise
-                            saved us 40% in development costs while maintaining all required functionality.</p>
-                    </div>
-                    <div class="client-info">
-                        <div class="client-avatar">SJ</div>
-                        <div class="client-details">
-                            <h4>Sarah Johnson</h4>
-                            <p>CEO, TechStart Inc.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>The iOS app Meet developed for us has 4.9/5 rating on App Store. His attention to UI/UX
-                            details and performance optimization is remarkable. Will definitely work with him again.</p>
-                    </div>
-                    <div class="client-info">
-                        <div class="client-avatar">MC</div>
-                        <div class="client-details">
-                            <h4>Michael Chen</h4>
-                            <p>Product Manager, HealthPlus</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>Meet's cross-platform solution using Flutter exceeded our expectations. He delivered both iOS
-                            and Android apps with native-like performance at half the cost of native development.</p>
-                    </div>
-                    <div class="client-info">
-                        <div class="client-avatar">AR</div>
-                        <div class="client-details">
-                            <h4>Amanda Rodriguez</h4>
-                            <p>CTO, FinTech Solutions</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-banner">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to Bring Your App Idea to Life?</h2>
-                <p>Let's discuss how I can help you create a high-quality mobile solution</p>
-                <a href="#contact" class="btn btn-primary">Start a Project</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Get In Touch</span>
-                <h2 class="text-gradient">Contact Me</h2>
-                <p>Have a project in mind or want to discuss potential opportunities? Feel free to reach out!</p>
-            </div>
-
-            <div class="contact-methods">
-                <div class="contact-item animate-on-scroll">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>Email</h3>
-                        <a href="mailto:patelmeet0809@gmail.com">patelmeet0809@gmail.com</a>
-                    </div>
-                </div>
-                <div class="contact-item animate-on-scroll">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>Phone</h3>
-                        <a href="tel:+916352717340">+91 (635) 271-7340</a>
-                    </div>
-                </div>
-                <div class="contact-item animate-on-scroll">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-text">
-                        <h3>Location</h3>
-                        <a href="">Ahmedabad, Gujarat, India</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <form class="contact-form">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" class="form-control" required></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form> -->
-
-            <div class="social-links">
-                <a href="https://github.com/patelmeet12" target="_blank" class="social-link" aria-label="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/patelmeet12" target="_blank" class="social-link"
-                    aria-label="LinkedIn">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="https://medium.com/@patelmeet12" target="_blank" class="social-link" aria-label="Medium">
-                    <i class="fa-brands fa-medium"></i>
-                </a>
-                <a href="https://x.com/patelmeet_12" target="_blank" class="social-link" aria-label="Twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ" target="_blank" class="social-link"
-                    aria-label="Microsoft Teams">
-                    <i class="fab fa-microsoft"></i>
-                </a>
-                <a href="https://www.upwork.com/freelancers/~0167ccc74d85c427a1?mp_source=share" target="_blank"
-                    class="social-link" aria-label="Microsoft Teams">
-                    <i class="fa-brands fa-upwork"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p class="footer-text">&copy; <span id="year"></span> Meet Patel. All rights reserved.</p>
+            <div class="mt-24 text-gray-600 text-sm"><p>&copy; 2025 Meet Patel. All rights reserved.</p></div>
         </div>
     </footer>
 
+    <!-- Hire Me Modal -->
+    <div id="hireModal" class="modal fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="modal-content relative bg-white dark:bg-zinc-900 w-full max-w-lg rounded-3xl p-8 shadow-2xl border border-black/10 dark:border-white/10 overflow-y-auto max-h-[90vh]">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black dark:hover:text-white transition-colors"><i class="ri-close-large-line text-2xl"></i></button>
+            <h3 class="text-3xl font-display font-bold mb-2 dark:text-white">Start a Project</h3>
+            <p class="text-gray-500 mb-8">Tell me a bit about what you're looking for, and I'll get back to you within 24 hours.</p>
+            <form class="space-y-4" onsubmit="sendEmail(event)">
+                <div><label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-500">Your Name</label><input type="text" id="clientName" required placeholder="John Doe" class="w-full bg-gray-100 dark:bg-black text-black dark:text-white border border-transparent focus:border-accent rounded-lg p-3 outline-none transition-colors"></div>
+                <div><label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-500">Email Address</label><input type="email" id="clientEmail" required placeholder="john@company.com" class="w-full bg-gray-100 dark:bg-black text-black dark:text-white border border-transparent focus:border-accent rounded-lg p-3 outline-none transition-colors"></div>
+                <div><label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-500">Project Type</label><select id="projectType" class="w-full bg-gray-100 dark:bg-black text-black dark:text-white border border-transparent focus:border-accent rounded-lg p-3 outline-none transition-colors appearance-none"><option>New Mobile App (iOS/Flutter)</option><option>App Maintenance / Update</option><option>Consultation</option><option>Other</option></select></div>
+                <div><label class="block text-xs font-bold uppercase tracking-wider mb-2 text-gray-500">Project Details</label><textarea id="projectDetails" required rows="3" placeholder="Brief description of your idea..." class="w-full bg-gray-100 dark:bg-black text-black dark:text-white border border-transparent focus:border-accent rounded-lg p-3 outline-none transition-colors"></textarea></div>
+                <button type="submit" class="w-full py-4 bg-black text-white dark:bg-white dark:text-black rounded-lg font-bold hover:scale-[1.02] transition-transform flex items-center justify-center gap-2"><i class="ri-send-plane-fill"></i> Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Logic -->
     <script>
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
+        // State for Projects
+        let visibleCount = 6;
+        let currentCategory = 'all';
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-
-            cursorFollower.animate({
-                left: `${e.clientX}px`,
-                top: `${e.clientY}px`
-            }, { duration: 600, fill: 'forwards' });
-        });
-
-        // Interactive elements effect
-        const interactiveElements = document.querySelectorAll(
-            'a, button, .portfolio-card, .skill-card, input, textarea, .contact-item'
-        );
-
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.width = '30px';
-                cursor.style.height = '30px';
-                cursor.style.backgroundColor = 'var(--primary)';
-
-                cursorFollower.style.width = '60px';
-                cursorFollower.style.height = '60px';
+        // Render Logic
+        function renderProjects(animate = false) {
+            const items = document.querySelectorAll('.project-card');
+            let filteredItems = [];
+            
+            // 1. Filter items based on category
+            items.forEach(item => {
+                if (currentCategory === 'all' || item.dataset.category === currentCategory) {
+                    filteredItems.push(item);
+                } else {
+                    item.style.display = 'none';
+                }
             });
 
-            el.addEventListener('mouseleave', () => {
-                cursor.style.width = '20px';
-                cursor.style.height = '20px';
-                cursor.style.backgroundColor = 'transparent';
-
-                cursorFollower.style.width = '40px';
-                cursorFollower.style.height = '40px';
-            });
-        });
-
-        // Header scroll effect
-        const header = document.getElementById('header');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Portfolio filtering
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const portfolioItems = document.querySelectorAll('.portfolio-card');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterBtns.forEach(btn => btn.classList.remove('active'));
-
-                // Add active class to clicked button
-                btn.classList.add('active');
-
-                const filter = btn.dataset.filter;
-
-                portfolioItems.forEach(item => {
-                    if (filter === 'all' || item.dataset.category === filter) {
+            // 2. Show only visibleCount items from the filtered list
+            filteredItems.forEach((item, index) => {
+                if (index < visibleCount) {
+                    if (item.style.display === 'none' || animate) {
                         item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
+                        // Add simple animation class
+                        item.classList.add('animate-fade-in');
+                        setTimeout(() => item.classList.remove('animate-fade-in'), 500);
                     }
-                });
-            });
-        });
-
-        // Set current year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
+                } else {
+                    item.style.display = 'none';
                 }
             });
+
+            // 3. Handle "More Projects" button visibility
+            const btn = document.getElementById('load-more-btn');
+            if (btn) {
+                if (filteredItems.length > visibleCount) {
+                    btn.style.display = 'inline-block';
+                } else {
+                    btn.style.display = 'none';
+                }
+            }
+        }
+
+        // Filter Function triggered by tabs
+        function filterProjects(category, btn) {
+            // Update active tab UI
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Reset state
+            currentCategory = category;
+            visibleCount = 6; // Reset visible count on category change
+            
+            renderProjects(true);
+        }
+
+        // Load More Function
+        function loadMore() {
+            visibleCount += 6; // Show 6 more projects
+            renderProjects();
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader-wrapper');
+            setTimeout(() => {
+                loader.classList.add('loaded');
+                setTimeout(() => loader.style.display = 'none', 500);
+            }, 1000);
+            
+            // Initial Render
+            renderProjects(); 
         });
 
-        // Animation on scroll for contact items
-        const contactItems = document.querySelectorAll('.animate-on-scroll');
+        // Offline Toast Logic
+        const offlineToast = document.getElementById('offline-toast');
+        function updateOnlineStatus() {
+            if (navigator.onLine) offlineToast.classList.remove('show');
+            else offlineToast.classList.add('show');
+        }
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
 
-        const animateOnScroll = () => {
-            contactItems.forEach(item => {
-                const itemTop = item.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
+        // Email Logic
+        function sendEmail(e) {
+            e.preventDefault();
+            const name = document.getElementById('clientName').value;
+            const email = document.getElementById('clientEmail').value;
+            const type = document.getElementById('projectType').value;
+            const details = document.getElementById('projectDetails').value;
+            const subject = encodeURIComponent(`New Project Inquiry: ${type}`);
+            const body = encodeURIComponent(`Hi Meet,\n\nI am interested in starting a new project.\n\nName: ${name}\nEmail: ${email}\nProject Type: ${type}\n\nDetails:\n${details}\n\nLooking forward to hearing from you.`);
+            window.location.href = `mailto:patelmeet0809@gmail.com?subject=${subject}&body=${body}`;
+            setTimeout(() => closeModal(), 1000);
+        }
 
-                if (itemTop < windowHeight - 100) {
-                    item.classList.add('animated');
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('translate-x-full');
+            if (isHidden) {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.style.overflow = '';
+            }
+        }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Modal Logic
+        const modal = document.getElementById('hireModal');
+        function openModal() {
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            if (!mobileMenu.classList.contains('translate-x-full')) toggleMenu();
+        }
+        function closeModal() {
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) html.classList.add('dark');
+        else html.classList.remove('dark');
+
+        themeToggleBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) localStorage.theme = 'dark';
+            else localStorage.theme = 'light';
+        });
+
+        // Animations Logic
+        const observerOptions = { threshold: 0.1, rootMargin: "0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    if (entry.target.classList.contains('reveal-fade')) entry.target.classList.remove('opacity-0', 'translate-y-4');
                 }
             });
-        };
+        }, observerOptions);
 
-        // Run once on page load
-        animateOnScroll();
-
-        // Run on scroll
-        window.addEventListener('scroll', animateOnScroll);
+        document.querySelectorAll('.reveal-group').forEach(el => el.classList.add('is-visible'));
     </script>
 </body>
-
 </html>
