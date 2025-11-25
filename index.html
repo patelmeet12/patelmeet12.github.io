@@ -125,7 +125,7 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-40 top-0 py-4 px-6 md:px-12 backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-black/5 dark:border-white/5 transition-colors duration-300">
+    <nav class="fixed w-full z-40 top-0 py-4 px-4 md:px-12 backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-black/5 dark:border-white/5 transition-colors duration-300">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
             <div class="flex items-center gap-4">
                 <a href="#" class="text-xl font-display font-bold tracking-tighter uppercase relative z-50">
@@ -140,7 +140,7 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 md:gap-6">
                 <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest opacity-80">
                     <a href="#about" class="group relative overflow-hidden h-5">
                         <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">About</span>
@@ -165,22 +165,17 @@
                     Start a Project
                 </button>
 
-                <button id="mobile-menu-btn" aria-label="Open Menu" class="md:hidden text-2xl z-50 focus:outline-none">
-                    <i class="ri-menu-3-line"></i>
+                <button id="mobile-menu-btn" aria-label="Open Menu" class="md:hidden text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center">
+                    <i class="ri-menu-3-line transition-transform duration-300"></i>
                 </button>
             </div>
         </div>
 
         <div id="mobile-menu" class="fixed inset-0 bg-white dark:bg-black z-40 transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center space-y-8 md:hidden">
-            <!-- Close Button Inside Menu -->
-            <button id="close-menu-btn" aria-label="Close Menu" class="absolute top-6 right-6 text-2xl p-2">
-                <i class="ri-close-line"></i>
-            </button>
-            
+            <!-- Links -->
             <a href="#about" class="mobile-link text-3xl font-display font-bold hover:text-accent">About</a>
             <a href="#work" class="mobile-link text-3xl font-display font-bold hover:text-accent">Work</a>
             <a href="#contact" class="mobile-link text-3xl font-display font-bold hover:text-accent">Contact</a>
-            <!-- Removed 'mobile-link' class to prevent double toggle logic on click -->
             <button class="mt-8 px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-full font-bold" onclick="openModal()">
                 Start a Project
             </button>
@@ -238,7 +233,7 @@
                             <span class="text-sm uppercase tracking-wider text-gray-500">Years Experience</span>
                         </div>
                         <div class="border-l-2 border-black dark:border-white pl-6">
-                            <span class="block text-5xl font-bold font-display mb-2">40+</span>
+                            <span class="block text-5xl font-bold font-display mb-2">16+</span>
                             <span class="text-sm uppercase tracking-wider text-gray-500">Apps Delivered</span>
                         </div>
                     </div>
