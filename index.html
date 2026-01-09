@@ -9,12 +9,12 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -68,6 +68,10 @@
         .mask-text span { display: block; transform: translateY(100%); transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .is-visible .mask-text span { transform: translateY(0); }
 
+        /* Social Animation */
+        .reveal-socials { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal-socials.is-visible { opacity: 1; transform: translateY(0); }
+
         /* Grid Background */
         .bg-grid { background-size: 40px 40px; background-image: radial-gradient(circle, #0000001a 1px, transparent 1px); }
         .dark .bg-grid { background-image: radial-gradient(circle, #ffffff1a 1px, transparent 1px); }
@@ -78,21 +82,17 @@
         .loader-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: #2563EB; transition: width 0.1s ease; }
         #loader-wrapper.loaded { opacity: 0; visibility: hidden; }
 
+        /* Offline Toast */
+        #offline-toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 10000; transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        #offline-toast.show { bottom: 24px; }
+
         /* Modal Transitions */
         .modal { opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .modal.open { opacity: 1; visibility: visible; }
         .modal.open .modal-content { transform: translateY(0); }
         .modal-content { transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         
-        /* Active Tab State - Forced Override */
-        .tab-btn.active { 
-            background-color: #000000 !important; 
-            color: #ffffff !important; 
-        }
-        .dark .tab-btn.active { 
-            background-color: #ffffff !important; 
-            color: #000000 !important; 
-        }
+        /* Removed old .tab-btn.active CSS as we use JS animation now */
     </style>
 </head>
 <body class="bg-white text-black font-sans antialiased selection:bg-black selection:text-white dark:bg-black dark:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
@@ -103,6 +103,11 @@
             <div class="loader-progress" id="loader-progress"></div>
         </div>
         <div class="text-gray-500 font-mono text-xs mt-2" id="loader-text">0%</div>
+    </div>
+
+    <div id="offline-toast" class="flex items-center gap-3 px-6 py-4 bg-red-600 text-white rounded-full shadow-2xl">
+        <i class='bx bx-wifi-off text-xl animate-pulse'></i>
+        <span class="font-bold text-sm">No Internet Connection</span>
     </div>
 
     <nav class="fixed w-full z-50 top-0 py-4 px-4 md:px-12 backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-black/5 dark:border-white/5 transition-colors duration-300">
@@ -120,19 +125,43 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-6">
-                <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest opacity-80">
-                    <a href="#about" class="group relative overflow-hidden h-5 hover-target">
-                        <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">About</span>
-                        <span class="absolute top-0 left-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 text-accent">About</span>
+            <div class="flex items-center gap-2">
+                <!-- UPDATED DESKTOP NAVIGATION -->
+                <div class="hidden md:flex items-center gap-1 mr-4">
+                    <a href="#about" class="group relative px-5 py-2.5 rounded-full overflow-hidden hover-target">
+                        <!-- Pill Background -->
+                        <span class="absolute inset-0 bg-black/5 dark:bg-white/10 translate-y-[101%] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 rounded-full"></span>
+                        
+                        <!-- Text Content -->
+                        <span class="relative z-10 flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors duration-300 group-hover:text-black dark:group-hover:text-white text-gray-500 dark:text-gray-400">
+                            <!-- Dot Indicator -->
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent opacity-0 -translate-x-2 scale-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100"></span>
+                            About
+                        </span>
                     </a>
-                    <a href="#work" class="group relative overflow-hidden h-5 hover-target">
-                        <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">Work</span>
-                        <span class="absolute top-0 left-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 text-accent">Work</span>
+                    
+                    <a href="#work" class="group relative px-5 py-2.5 rounded-full overflow-hidden hover-target">
+                        <!-- Pill Background -->
+                        <span class="absolute inset-0 bg-black/5 dark:bg-white/10 translate-y-[101%] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 rounded-full"></span>
+                        
+                        <!-- Text Content -->
+                        <span class="relative z-10 flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors duration-300 group-hover:text-black dark:group-hover:text-white text-gray-500 dark:text-gray-400">
+                            <!-- Dot Indicator -->
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent opacity-0 -translate-x-2 scale-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100"></span>
+                            Work
+                        </span>
                     </a>
-                    <a href="#contact" class="group relative overflow-hidden h-5 hover-target">
-                        <span class="block transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:-translate-y-full">Contact</span>
-                        <span class="absolute top-0 left-0 block translate-y-full transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:translate-y-0 text-accent">Contact</span>
+                    
+                    <a href="#contact" class="group relative px-5 py-2.5 rounded-full overflow-hidden hover-target">
+                        <!-- Pill Background -->
+                        <span class="absolute inset-0 bg-black/5 dark:bg-white/10 translate-y-[101%] transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 rounded-full"></span>
+                        
+                        <!-- Text Content -->
+                        <span class="relative z-10 flex items-center gap-2 text-sm font-bold uppercase tracking-widest transition-colors duration-300 group-hover:text-black dark:group-hover:text-white text-gray-500 dark:text-gray-400">
+                            <!-- Dot Indicator -->
+                            <span class="w-1.5 h-1.5 rounded-full bg-accent opacity-0 -translate-x-2 scale-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100"></span>
+                            Contact
+                        </span>
                     </a>
                 </div>
 
@@ -141,7 +170,7 @@
                 </button>
 
                 <button id="mobile-menu-btn" aria-label="Open Menu" class="md:hidden text-2xl z-50 focus:outline-none w-10 h-10 flex items-center justify-center relative hover-target">
-                    <i class="ri-menu-3-line transition-all duration-300 transform"></i>
+                    <i class='bx bx-menu-alt-right transition-all duration-300 transform'></i>
                 </button>
             </div>
         </div>
@@ -253,140 +282,145 @@
                 <h2 class="text-5xl md:text-7xl font-display font-bold mb-6">Selected Work</h2>
                 <p class="text-gray-500 text-lg max-w-2xl mb-10">A comprehensive collection of high-performance mobile applications deployed to the App Store & Play Store.</p>
                 
-                <div class="inline-flex p-1.5 rounded-full bg-white dark:bg-black/50 border border-black/5 dark:border-white/10 shadow-sm">
-                    <button class="tab-btn active px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white" onclick="filterProjects('all', this)">All</button>
-                    <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white" onclick="filterProjects('ios', this)">iOS</button>
-                    <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white" onclick="filterProjects('flutter', this)">Flutter</button>
-                    <button class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 transition-all hover:text-black dark:hover:text-white" onclick="filterProjects('react', this)">React Native</button>
+                <!-- NEW SLIDING MAGNETIC TABS -->
+                <div class="relative inline-flex p-1.5 bg-gray-200/50 dark:bg-white/5 backdrop-blur-xl rounded-full border border-black/5 dark:border-white/10">
+                    <!-- The Sliding Pill (Background) -->
+                    <div id="active-tab-pill" class="absolute top-1.5 bottom-1.5 bg-white dark:bg-zinc-800 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all duration-500 cubic-bezier(0.34, 1.56, 0.64, 1)"></div>
+                    
+                    <!-- Tab Buttons -->
+                    <button class="tab-btn relative z-10 px-8 py-3 rounded-full text-sm font-bold text-black dark:text-white transition-colors duration-300" onclick="filterProjects('all', this)">All</button>
+                    <button class="tab-btn relative z-10 px-8 py-3 rounded-full text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300" onclick="filterProjects('ios', this)">iOS</button>
+                    <button class="tab-btn relative z-10 px-8 py-3 rounded-full text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300" onclick="filterProjects('flutter', this)">Flutter</button>
+                    <button class="tab-btn relative z-10 px-8 py-3 rounded-full text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300" onclick="filterProjects('react', this)">React Native</button>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="projects-grid">
                 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Formzi</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Data Collection</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/formzi/id1192981423" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/formzi/id1192981423" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Polstrat Cadre</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Management</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/polstrat-cadre-app/id6739358828" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/polstrat-cadre-app/id6739358828" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="flutter">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-flutter-fill text-[180px] text-[#02569B]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-flutter-fill text-3xl text-[#02569B]"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-flutter text-[180px] text-[#02569B]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-flutter text-3xl text-[#02569B]'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Neuro Physio Rx</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Dart</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Healthcare</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/in/app/neuro-physio-rx/id6478271730" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a><a href="https://play.google.com/store/apps/details?id=com.app.neurophysiorx" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/in/app/neuro-physio-rx/id6478271730" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-apple'></i></a><a href="https://play.google.com/store/apps/details?id=com.app.neurophysiorx" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-play-store'></i></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="react">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none"><i class="ri-reactjs-line text-[180px] text-[#61DAFB]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-reactjs-line text-3xl text-[#61DAFB]"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none"><i class='bx bxl-react text-[180px] text-[#61DAFB]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-react text-3xl text-[#61DAFB]'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">ShoppyWhere</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">JS</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">E-Commerce</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/it/app/shoppywhere/id6639615044" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a><a href="https://play.google.com/store/apps/details?id=com.shoppywhere" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/it/app/shoppywhere/id6639615044" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-apple'></i></a><a href="https://play.google.com/store/apps/details?id=com.shoppywhere" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-play-store'></i></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="react">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none"><i class="ri-reactjs-line text-[180px] text-[#61DAFB]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-reactjs-line text-3xl text-[#61DAFB]"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none"><i class='bx bxl-react text-[180px] text-[#61DAFB]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-react text-3xl text-[#61DAFB]'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">K-Go</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">JS</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Transport</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/us/app/k-go-book-a-ride/id1488105887" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a><a href="https://play.google.com/store/apps/details?id=com.kgodriver" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/us/app/k-go-book-a-ride/id1488105887" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-apple'></i></a><a href="https://play.google.com/store/apps/details?id=com.kgodriver" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-play-store'></i></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="flutter">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-flutter-fill text-[180px] text-[#02569B]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-flutter-fill text-3xl text-[#02569B]"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-flutter text-[180px] text-[#02569B]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-flutter text-3xl text-[#02569B]'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">DiNGr</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Dart</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Social</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/us/app/dingr/id6499414611" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a><a href="https://play.google.com/store/apps/details?id=com.app.dingr" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/us/app/dingr/id6499414611" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-apple'></i></a><a href="https://play.google.com/store/apps/details?id=com.app.dingr" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-play-store'></i></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="flutter">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-flutter-fill text-[180px] text-[#02569B]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-flutter-fill text-3xl text-[#02569B]"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-flutter text-[180px] text-[#02569B]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-flutter text-3xl text-[#02569B]'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Tradeasia</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Dart</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">B2B</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/sk/app/tradeasia/id6478198700" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a><a href="https://play.google.com/store/apps/details?id=com.app.btwob" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/sk/app/tradeasia/id6478198700" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-apple'></i></a><a href="https://play.google.com/store/apps/details?id=com.app.btwob" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-play-store'></i></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Doggy Date</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Social</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/ca/app/doggy-date-by-dog-days/id1462254114" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/ca/app/doggy-date-by-dog-days/id1462254114" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Travel Wallet</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Finance</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/travel-wallet-app/id1569577459" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/travel-wallet-app/id1569577459" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="react">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none"><i class="ri-reactjs-line text-[180px] text-[#61DAFB]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-reactjs-line text-3xl text-[#61DAFB]"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.05] dark:opacity-[0.08] group-hover:opacity-[0.12] group-hover:scale-110 group-hover:rotate-[20deg] transition-all duration-700 pointer-events-none"><i class='bx bxl-react text-[180px] text-[#61DAFB]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-react text-3xl text-[#61DAFB]'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Malpack Toolbox</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">JS</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Tools</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/gh/app/malpack-toolbox/id6477567834" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-app-store-fill"></i></a><a href="https://play.google.com/store/apps/details?id=com.app.malpack" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class="ri-google-play-fill"></i></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-4"><a href="https://apps.apple.com/gh/app/malpack-toolbox/id6477567834" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-apple'></i></a><a href="https://play.google.com/store/apps/details?id=com.app.malpack" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all"><i class='bx bxl-play-store'></i></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Nazaray</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Lifestyle</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/nazaray/id6443620350" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/nazaray/id6443620350" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Added Food</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Food</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/added-food-delivery/id1626500994" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/added-food-delivery/id1626500994" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Added Driver</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Logistics</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/added-driver/id1626500465" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/added-driver/id1626500465" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Cintona</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Business</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/cintona/id1554648094" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/in/app/cintona/id1554648094" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Stable Hub</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Equestrian</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/az/app/stable-hub/id1556437401" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/az/app/stable-hub/id1556437401" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">LittleSouls</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Charity</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/ca/app/littlesouls/id1553078697" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/ca/app/littlesouls/id1553078697" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">MindMapping</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Productivity</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/mindmapping-resilience/id1626979283" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/mindmapping-resilience/id1626979283" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
                 <div class="project-card group relative p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 hover:border-accent/50 hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 overflow-hidden flex flex-col h-[280px] hover-target" data-category="ios">
-                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class="ri-apple-fill text-[180px]"></i></div>
-                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class="ri-apple-fill text-3xl text-black dark:text-white"></i></div></div>
+                    <div class="absolute -right-8 -bottom-8 opacity-[0.03] dark:opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-110 group-hover:rotate-12 transition-all duration-700 pointer-events-none"><i class='bx bxl-apple text-[180px]'></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10"><div class="p-3 rounded-2xl bg-gray-50 dark:bg-black border border-black/5 dark:border-white/10"><i class='bx bxl-apple text-3xl text-black dark:text-white'></i></div></div>
                     <div class="relative z-10"><h3 class="text-2xl font-display font-bold mb-2 text-black dark:text-white">Added Restaurant</h3><div class="flex items-center gap-2 mb-6"><span class="text-xs font-bold uppercase tracking-wider text-accent">Swift</span><span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span><span class="text-xs font-mono text-gray-500">Business</span></div></div>
-                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/added-restaurant/id1626786117" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class="ri-app-store-fill text-base"></i></span><span>App Store</span></a></div>
+                    <div class="mt-auto pt-6 border-t border-black/5 dark:border-white/5 relative z-10 flex gap-3"><a href="https://apps.apple.com/us/app/added-restaurant/id1626786117" target="_blank" class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider hover:text-accent transition-colors"><span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/10 flex items-center justify-center"><i class='bx bxl-apple text-base'></i></span><span>App Store</span></a></div>
                 </div>
 
             </div>
@@ -410,35 +444,71 @@
                 Looking for a Senior Developer to lead your next mobile project? I am currently available for freelance and full-time opportunities.
             </p>
             
-            <a href="mailto:patelmeet0809@gmail.com" class="px-10 py-5 bg-white text-black rounded-full font-bold text-lg hover:scale-110 transition-transform mb-16 flex items-center gap-2 hover-target">
-                <i class="ri-mail-line"></i> Say Hello
+            <a href="mailto:patelmeet0809@gmail.com" class="group relative inline-flex items-center justify-center px-10 py-5 mb-16 overflow-hidden rounded-full bg-white/5 backdrop-blur-sm border border-white/10 transition-all duration-500 hover:bg-white hover:border-white hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] hover-target">
+                <!-- Original Content (Slides Up) -->
+                <div class="flex items-center gap-3 transition-all duration-500 group-hover:-translate-y-[150%] group-hover:opacity-0">
+                    <i class='bx bx-envelope text-2xl text-white/80'></i>
+                    <span class="text-lg font-bold text-white tracking-wide">patelmeet0809@gmail.com</span>
+                </div>
+                
+                <!-- New Content (Slides In) -->
+                <div class="absolute flex items-center gap-2 translate-y-[150%] opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                    <span class="text-lg font-bold text-black uppercase tracking-widest">Send Message</span>
+                    <i class='bx bx-send text-2xl text-black group-hover:translate-x-1 transition-transform duration-300'></i>
+                </div>
             </a>
 
-            <div class="grid grid-cols-3 gap-8 md:flex md:justify-center md:gap-12 text-2xl w-full max-w-4xl">
-                <a href="https://www.linkedin.com/in/patelmeet12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2">
-                    <i class="fa-brands fa-linkedin"></i>
-                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase opacity-50">LinkedIn</span>
+            <!-- NEW SOCIAL MEDIA: Floating Brand Glow -->
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 mt-8 reveal-socials">
+                
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/patelmeet12" target="_blank" class="group flex flex-col items-center gap-3 hover-target">
+                    <div class="relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-2 group-hover:scale-110">
+                        <i class='bx bxl-linkedin text-5xl text-gray-700 transition-all duration-500 group-hover:text-[#0A66C2] group-hover:drop-shadow-[0_0_15px_rgba(10,102,194,0.5)]'></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">LinkedIn</span>
                 </a>
-                <a href="https://github.com/patelmeet12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2">
-                    <i class="fa-brands fa-github"></i>
-                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase opacity-50">GitHub</span>
+
+                <!-- GitHub -->
+                <a href="https://github.com/patelmeet12" target="_blank" class="group flex flex-col items-center gap-3 hover-target">
+                    <div class="relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-2 group-hover:scale-110">
+                        <i class='bx bxl-github text-5xl text-gray-700 transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]'></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">GitHub</span>
                 </a>
-                <a href="https://x.com/patelmeet_12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2">
-                    <i class="fa-brands fa-twitter"></i>
-                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase opacity-50">Twitter / X</span>
+
+                <!-- X / Twitter -->
+                <a href="https://x.com/patelmeet_12" target="_blank" class="group flex flex-col items-center gap-3 hover-target">
+                    <div class="relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-2 group-hover:scale-110">
+                        <i class='bx bxl-twitter text-5xl text-gray-700 transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]'></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">Twitter</span>
                 </a>
-                <a href="https://medium.com/@patelmeet12" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2">
-                    <i class="fa-brands fa-medium"></i>
-                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase opacity-50">Medium</span>
+
+                <!-- Medium -->
+                <a href="https://medium.com/@patelmeet12" target="_blank" class="group flex flex-col items-center gap-3 hover-target">
+                    <div class="relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-2 group-hover:scale-110">
+                        <i class='bx bxl-medium text-5xl text-gray-700 transition-all duration-500 group-hover:text-white group-hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]'></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">Medium</span>
                 </a>
-                <a href="https://www.upwork.com/freelancers/~0167ccc74d85c427a1?mp_source=share" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2">
-                    <i class="fa-brands fa-upwork"></i>
-                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase opacity-50">Upwork</span>
+
+                <!-- Upwork -->
+                <a href="https://www.upwork.com/freelancers/~0167ccc74d85c427a1?mp_source=share" target="_blank" class="group flex flex-col items-center gap-3 hover-target">
+                    <div class="relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-2 group-hover:scale-110">
+                        <i class='bx bxl-upwork text-5xl text-gray-700 transition-all duration-500 group-hover:text-[#14a800] group-hover:drop-shadow-[0_0_15px_rgba(20,168,0,0.5)]'></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">Upwork</span>
                 </a>
-                <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ" target="_blank" class="hover:text-gray-400 transition-transform hover:-translate-y-2 flex flex-col items-center gap-2">
-                    <i class="fa-solid fa-people-group"></i>
-                    <span class="text-[10px] md:text-xs font-sans tracking-widest uppercase opacity-50">Teams</span>
+
+                <!-- Teams -->
+                <a href="https://teams.live.com/l/invite/FEAJntj2DbZhBCcKgQ" target="_blank" class="group flex flex-col items-center gap-3 hover-target">
+                    <div class="relative transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-hover:-translate-y-2 group-hover:scale-110">
+                        <i class='bx bxl-microsoft-teams text-5xl text-gray-700 transition-all duration-500 group-hover:text-[#6264a7] group-hover:drop-shadow-[0_0_15px_rgba(98,100,167,0.5)]'></i>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500 opacity-0 transform translate-y-2 transition-all duration-500 group-hover:opacity-100 group-hover:translate-y-0 group-hover:text-white">Teams</span>
                 </a>
+
             </div>
 
             <div class="mt-24 text-gray-600 text-sm">
@@ -451,7 +521,7 @@
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
         <div class="modal-content relative bg-white dark:bg-zinc-900 w-full max-w-lg rounded-3xl p-8 shadow-2xl border border-black/10 dark:border-white/10 overflow-y-auto max-h-[90vh]">
             <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black dark:hover:text-white transition-colors hover-target">
-                <i class="ri-close-large-line text-2xl"></i>
+                <i class='bx bx-x text-2xl'></i>
             </button>
 
             <h3 class="text-3xl font-display font-bold mb-2 dark:text-white">Start a Project</h3>
@@ -481,7 +551,7 @@
                 </div>
                 
                 <button type="submit" class="w-full py-4 bg-black text-white dark:bg-white dark:text-black rounded-lg font-bold hover:scale-[1.02] transition-transform flex items-center justify-center gap-2 hover-target">
-                    <i class="ri-send-plane-fill"></i> Send Request
+                    <i class='bx bxs-send'></i> Send Request
                 </button>
             </form>
         </div>
@@ -551,13 +621,13 @@
             if (isHidden) {
                 mobileMenu.classList.remove('translate-x-full');
                 document.body.style.overflow = 'hidden';
-                menuIcon.classList.remove('ri-menu-3-line');
-                menuIcon.classList.add('ri-close-line');
+                menuIcon.classList.remove('bx-menu-alt-right');
+                menuIcon.classList.add('bx-x');
             } else {
                 mobileMenu.classList.add('translate-x-full');
                 document.body.style.overflow = '';
-                menuIcon.classList.remove('ri-close-line');
-                menuIcon.classList.add('ri-menu-3-line');
+                menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu-alt-right');
             }
         }
         if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMenu);
@@ -627,9 +697,20 @@
         }
 
         window.filterProjects = function(category, btn) {
-            // Update Active Tab UI
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            // Update Active Pill Position
+            const pill = document.getElementById('active-tab-pill');
+            if(pill && btn) {
+                pill.style.width = `${btn.offsetWidth}px`;
+                pill.style.left = `${btn.offsetLeft}px`;
+            }
+
+            // Update Text Colors
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('text-black', 'dark:text-white');
+                b.classList.add('text-gray-500', 'dark:text-gray-400');
+            });
+            btn.classList.remove('text-gray-500', 'dark:text-gray-400');
+            btn.classList.add('text-black', 'dark:text-white');
 
             // Reset Logic
             currentCategory = category;
@@ -642,6 +723,16 @@
             renderProjects();
         }
 
+        // Initialize Pill on Load
+        window.addEventListener('load', () => {
+            const firstBtn = document.querySelector('.tab-btn');
+            if(firstBtn) {
+                const pill = document.getElementById('active-tab-pill');
+                pill.style.width = `${firstBtn.offsetWidth}px`;
+                pill.style.left = `${firstBtn.offsetLeft}px`;
+            }
+        });
+
         // --- Observer Logic ---
         const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
@@ -652,7 +743,11 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.reveal-group').forEach(el => el.classList.add('is-visible'));
+        document.querySelectorAll('.reveal-group').forEach(el => observer.observe(el));
+        
+        // Add observation for the new social section
+        const socialSection = document.querySelector('.reveal-socials');
+        if (socialSection) observer.observe(socialSection);
     </script>
 </body>
 </html>
