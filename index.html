@@ -1589,23 +1589,23 @@
         window.addEventListener('resize', updateTabPillPosition);
 
         // --- Theme Logic ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
+        // const themeToggleBtn = document.getElementById('theme-toggle');
 
-        // Initial Theme Setup
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        // // Initial Theme Setup
+        // const currentTheme = localStorage.getItem('theme');
+        // if (currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        //     document.documentElement.classList.add('dark');
+        // } else {
+        //     document.documentElement.classList.remove('dark');
+        // }
 
-        // Theme Toggle Handler
-        if (themeToggleBtn) {
-            themeToggleBtn.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            });
-        }
+        // // Theme Toggle Handler
+        // if (themeToggleBtn) {
+        //     themeToggleBtn.addEventListener('click', () => {
+        //         const isDark = document.documentElement.classList.toggle('dark');
+        //         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        //     });
+        // }
 
         // --- Observer Logic ---
         const observerOptions = { threshold: 0.1 };
